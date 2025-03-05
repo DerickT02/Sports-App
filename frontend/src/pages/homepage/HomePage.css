@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background: black; /* set the background color for the entire page */
+  }
+  
+  /* Homepage Wrapper */
+  .homepage-wrapper {
+    position: relative; /* make the wrapper relative for absolute positioning */
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  /* background Photo */
+  .background-photo {
+    position: absolute; 
+    width: 100%;
+    height: 3615px; 
+    background-image: url('./assets/logoBackground.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    z-index: 1; 
+    opacity: 0.15; 
+  }
+  
+  /* Header Container */
+  .header-container {
+    width: 99%; 
+    height: 110.6px;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    z-index: 1000; 
+  }
+  
+  /* header Content */
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1920px; 
+    padding: 0 20px; 
+  }
+  
+  /* logo Section */
+  .logo-section {
+    width: 231.16px;
+    height: 110.6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo-image {
+    width: 109.14px;
+    height: 110.6px;
+    border-radius: 54.57px;
+  }
+  
+  .divider {
+    margin: 0 10px; /* adjust spacing as needed */
+  }
+  
+  .logo-text {
+    color: white;
+    font-size: 13.43px;
+    font-family: 'Bodoni Moda', serif;
+    font-weight: 900;
+    letter-spacing: 0.67px;
+    word-wrap: break-word;
+  }
+  
+  .nav-links {
+    width: 355px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 27px;
+  }
+  
+  .nav-item {
+    color: white;
+    font-size: 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1.25px;
+    word-wrap: break-word;
+    cursor: pointer;
+  }
+  
+  /* Sign Up Button */
+  .signup-button {
+    width: 170px;
+    height: 52px;
+    background: #c55a2b;
+    border-radius: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  
+  .signup-text {
+    color: white;
+    font-size: 21px;
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    letter-spacing: 1.05px;
+    word-wrap: break-word;
+  }
+  
+  .main-content {
+    padding-top: 180px; /* added padding equal to the header height */
+    width: 100%;
+    min-height: 100px; /* ensure the content takes up at least the full viewport height */
+    position: relative; /* make the main content relative for z-index */
+    z-index: 2; /* place it above the background photo */
+  }
+  
+  .responsive-text-container {
+    padding-top: 1100px; /* lowers the text to fit how i want */
+  }
+  
+  /* responsive text styles */
+  .unlock-text,
+  .nil-text,
+  .space-text,
+  .team-text {
+    font-family: 'Bodoni MT', serif;
+    font-style: italic;
+    font-weight: 700;
+    text-decoration: underline;
+    word-wrap: break-word;
+    text-shadow: 0px 0px 100px rgba(201, 191, 183, 1);
+  }
+  
+  .unlock-text {
+    color: #f5f5dc;
+    font-size: 44px; 
+  }
+  
+  .nil-text {
+    color: #c55a2b;
+    font-size: 44px; 
+  }
+  
+  .space-text {
+    color: #f5f5dc;
+    font-size: 44px;
+  }
+  
+  .team-text {
+    color: #c55a2b;
+    font-size: 22px; 
+    line-height: 1.5;
+    letter-spacing: 0.92px;
+  }
+  
+  /* Slider Image Container */
+  .slider-image-container {
+    width: 100%; 
+    max-width: 1920px; 
+    margin: 0 auto; /* center the container */
+    padding: 20px 0; /* add some vertical padding */
+  }
+  
+  /* Slider Image */
+  .slider-image {
+    width: 100%; 
+    height: auto; /* maintain aspect ratio */
+    max-height: 400px; /* set maximum height */
+    object-fit: cover; /* make sure the image covers the container */
+  }
+/* WHY CHOOSE US? Text */
+.why-choose-us {
+    text-align: center;
+    color: #f5f5dc;
+    font-size: 69px;
+    font-family: 'Bodoni MT', serif;
+    font-weight: 700;
+    letter-spacing: 3.45px;
+    word-wrap: break-word;
+    text-shadow: 0px 0px 100px rgba(166, 151, 151, 1);
+    margin-top: 600px; /* increased margin to lower the text */
+    margin-bottom: 50px; /* add spacing below the text */
+  }
+  
+ /* three-column layout for athlete-first approach sections */
+.athlete-first-container {
+    display: flex;
+    justify-content: space-between; /* distribute sections evenly */
+    align-items: flex-start; /* align sections to the top */
+    width: 100%;
+    max-width: 1200px; /* adjust the max width as needed */
+    margin: 0 auto; /* center the container */
+    padding: 0 10px; /* added horizontal padding */
+  }
+  
+  /* Athlete-first Approach Section */
+  .athlete-first-section {
+    width: 30%; /* each section takes up 30% of the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .athlete-first-content {
+    width: 100%;
+    padding: 0 20px; /* dd some horizontal padding */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+  
+  .athlete-first-title {
+    color: #f5f5dc;
+    font-size: 28px;
+    font-family: 'Bodoni MT', serif;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    word-wrap: break-word;
+    text-align: center;
+  }
+  
+  .divider-line {
+    width: 100%;
+    height: 2px;
+    margin: 10px 0; /* add spacing above and below the line */
+  }
+  
+  .athlete-first-description {
+    color: #f5f5dc;
+    font-size: 25px;
+    font-family: 'Bodoni MT', serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    word-wrap: break-word;
+    text-align: center;
+  }
+  
+ 

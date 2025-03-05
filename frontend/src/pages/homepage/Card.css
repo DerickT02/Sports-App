@@ -1,0 +1,45 @@
+/* card container */
+.card {
+  width: 220px; /* fixed width for each card */
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex: 0 0 auto; /* prevent cards from shrinking */
+  margin: 0 10px; /* add some spacing between cards */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* smooth hover effect */
+}
+
+.card:hover {
+  transform: translateY(-10px); /* lift the card slightly on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* add a stronger shadow on hover */
+}
+
+/* card image */
+.card-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover; /* ensure the image covers the container */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* card content */
+.card-content {
+  padding: 15px;
+}
+
+/* card title */
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #330; 
+}
+
+/* card description */
+.card-description {
+  font-size: 14px;
+  color: #660; 
+  line-height: 1.5; 
+}

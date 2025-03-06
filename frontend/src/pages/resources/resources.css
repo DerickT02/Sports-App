@@ -1,0 +1,73 @@
+/* Container for the Resources page */
+.resources-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    color: #f5f5dc; /* Off-white text */
+    font-family: 'Lato', sans-serif;
+  }
+  
+  /* Page Title */
+  .resources-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Content wrapper */
+  .resources-content {
+    margin-top: 2rem;
+  }
+  
+  /* Section styling for each resource group */
+  .resource-section {
+    margin-bottom: 3rem;
+  }
+  
+  /* Subheading for each resource section */
+  .resources-subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #c55a2b;
+    text-align: center;
+  }
+  
+  /* List styling */
+  .resources-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .resources-list li {
+    background: rgba(0, 0, 0, 0.2);
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  /* Resource item headings */
+  .resources-list h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Resource item descriptions */
+  .resources-list p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .resources-page {
+      padding: 1rem;
+    }
+    .resources-title {
+      font-size: 2rem;
+    }
+    .resources-subtitle {
+      font-size: 1.5rem;
+    }
+  }
+  

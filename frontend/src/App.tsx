@@ -7,7 +7,7 @@ import NavBar from './components/NavBar'
 
 // Pages
 import HomePage from './pages/homepage/Index'
-//import AboutUs from './pages/AboutUs'
+import AboutUs from './pages/AboutUs'
 
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/about-us" element={<AboutUs />} />
       </Routes>
     </Router>
   )

@@ -1,0 +1,46 @@
+/* 1) Reset/Normalize Basic Elements */
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Apply box-sizing to all elements */
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+  
+  /* 2) Base Body Styles */
+  body {
+    /* Choose a global font (replace with any font you prefer) */
+    font-family: 'Open Sans', sans-serif;
+    /* Set a global text color */
+    color: #333;
+  
+    /* Background styling */
+    background: url('/path/to/background-image.jpg') no-repeat center center fixed;
+    background-size: cover; /* or contain, depending on your preference */
+    background-color: #854848; /* fallback color if image fails to load */
+  
+    /* Smoother font rendering (optional) */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* 3) Base Link Styles */
+  a {
+    color: inherit;          /* Links inherit the base text color (#333) */
+    text-decoration: none;   /* Remove underline by default */
+  }
+  
+  a:hover {
+    text-decoration: underline; /* Show underline on hover to indicate clickable link */
+  }
+  
+  /* 4) Headings */
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0.5em 0;
+    font-weight: 600;
+  }

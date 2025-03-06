@@ -1,0 +1,64 @@
+/* Container for the entire sign in page */
+.signin-page {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.2); /* Subtle dark background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #f5f5dc; /* Off-white text */
+    font-family: 'Lato', sans-serif;
+  }
+  
+  /* Title styling */
+  .signin-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Form layout */
+  .signin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Label styling */
+  .signin-label {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  /* Input fields styling */
+  .signin-input {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  /* Sign In button styling */
+  .signin-button {
+    padding: 0.75rem;
+    background-color: #c55a2b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signin-button:hover {
+    background-color: #b55d2a;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .signin-page {
+      margin: 1rem;
+      padding: 1rem;
+    }
+  }
+  

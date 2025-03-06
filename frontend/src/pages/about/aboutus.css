@@ -1,0 +1,147 @@
+/* ============================= */
+/*      ABOUT US PAGE           */
+/* ============================= */
+.about-us-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #f5f5dc; /* Off-white text */
+  font-family: 'Lato', sans-serif;
+}
+
+/* ---------- Top Section: Mission & Story ---------- */
+.about-top-section {
+  margin-bottom: 3rem;
+}
+
+.about-top-section h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.mission-section,
+.story-section {
+  margin-bottom: 2rem;
+}
+
+.mission-section h2,
+.story-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.mission-section p,
+.story-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---------- Team Section ---------- */
+.team-section {
+  margin-top: 3rem;
+}
+
+.team-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.team-members {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.employee-card {
+  display: flex;
+  gap: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  align-items: flex-start;
+}
+
+.employee-photo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.employee-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.employee-name {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.employee-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #c55a2b;
+  margin-bottom: 0.5rem;
+}
+
+.employee-description {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* ---------- FAQ Section ---------- */
+.faq-section {
+  margin-top: 3rem;
+}
+
+.faq-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.faq-item {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.faq-question {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #c55a2b;
+}
+
+.faq-answer {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---------- Responsive Adjustments ---------- */
+@media (max-width: 768px) {
+  .employee-card {
+    flex-direction: column;
+    align-items: center;
+  }
+  .employee-photo {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+  .employee-info {
+    align-items: center;
+    text-align: center;
+  }
+}

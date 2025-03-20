@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import './NavBar.css'
 import logo from '../../assets/ClientLogo.png'
@@ -6,87 +6,49 @@ import logo from '../../assets/ClientLogo.png'
 export default function NavBar() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [menuOpen, setMenuOpen] = useState(false)
 
-  // Helper function: checks if the current route is active
   const isActive = (path: string): boolean => location.pathname === path
 
+  const handleNavClick = (path: string) => {
+    navigate(path)
+    setMenuOpen(false) 
+  }
+
   return (
-    <div className="header-container">
-      <div className="header-content">
-        {/* Logo + Divider + Text */}
-        <div
-          className="logo-section"
-          onClick={() => navigate('/')}
-          style={{ cursor: 'pointer' }}
-        >
-          <img src={logo} alt="Logo" className="logo-image" />
-          <svg
-            className="divider"
-            width="2"
-            height="62"
-            viewBox="0 0 2 62"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0.946899 0.787964V61.5172"
-              stroke="white"
-              strokeWidth="1.67915"
-            />
-          </svg>
-          <div className="logo-text">
-            PLAYERS<br />CLUB<br />MANAGMENT
-          </div>
+    <nav className="navbar">
+      <div className="nav-content">
+        {/* Logo Section */}
+        <div className="logo" onClick={() => navigate('/')}>
+          <img src={logo} alt="Logo" />
+          <div className="logo-text">PLAYERS<br />CLUB<br />MANAGEMENT</div>
+        </div>
+
+        {/* Hamburger Button */}
+        <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          <div className={`bar ${menuOpen ? 'open' : ''}`}></div>
+          <div className={`bar ${menuOpen ? 'open' : ''}`}></div>
+          <div className={`bar ${menuOpen ? 'open' : ''}`}></div>
         </div>
 
         {/* Navigation Links */}
-        <div className="nav-links">
-          <div
-            className={`nav-item ${isActive('/about-us') ? 'active' : ''}`}
-            onClick={() => navigate('/about-us')}
-            style={{ cursor: 'pointer' }}
-          >
-            About Us
-          </div>
-          <div
-            className={`nav-item ${isActive('/athletes') ? 'active' : ''}`}
-            onClick={() => navigate('/athletes')}
-            style={{ cursor: 'pointer' }}
-          >
-            Athletes
-          </div>
-          <div
-            className={`nav-item ${isActive('/services') ? 'active' : ''}`}
-            onClick={() => navigate('/services')}
-            style={{ cursor: 'pointer' }}
-          >
-            Services
-          </div>
-          <div
-            className={`nav-item ${isActive('/resources') ? 'active' : ''}`}
-            onClick={() => navigate('/resources')}
-            style={{ cursor: 'pointer' }}
-          >
-            Resources
-          </div>
-          <div
-            className={`nav-item ${isActive('/contact-us') ? 'active' : ''}`}
-            onClick={() => navigate('/contact-us')}
-            style={{ cursor: 'pointer' }}
-          >
-            Contact Us
-          </div>
+        <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
+          {['/about-us', '/athletes', '/services', '/resources', '/contact-us'].map((path, index) => (
+            <div
+              key={index}
+              className={`nav-item ${isActive(path) ? 'active' : ''}`}
+              onClick={() => handleNavClick(path)}
+            >
+              {path.replace('/', '').replace('-', ' ').toUpperCase()}
+            </div>
+          ))}
         </div>
 
-        {/* Sign In */}
-        <div
-          className="signin-button"
-          onClick={() => navigate('/sign-in')}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className="signup-text">Sign In</div>
+        {/* Sign In Button */}
+        <div className="signin-button" onClick={() => navigate('/sign-in')}>
+          Sign In
         </div>
       </div>
-    </div>
+    </nav>
   )
 }

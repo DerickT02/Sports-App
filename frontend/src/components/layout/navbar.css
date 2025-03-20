@@ -1,97 +1,117 @@
-.header-container {
+.navbar {
   width: 100%;
-  height: 110.6px;
+  height: 80px;
   background: black;
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: fixed; 
-  top: 0; 
+  justify-content: center;
+  position: fixed;
+  top: 0;
   left: 0;
   z-index: 1000;
 }
 
-.header-content {
+.nav-content {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: 1920px;
   padding: 0 20px;
 }
 
-.logo-section {
-  width: 231.16px;
-  height: 110.6px;
+.logo {
   display: flex;
-  justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 
-.logo-image {
-  width: 109.14px;
-  height: 110.6px;
-  border-radius: 54.57px;
-}
-
-.divider {
-  margin: 0 10px;
+.logo img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 }
 
 .logo-text {
   color: white;
-  font-size: 13.43px;
+  font-size: 14px;
   font-family: 'Bodoni Moda', serif;
   font-weight: 900;
   letter-spacing: 0.67px;
+  margin-left: 10px;
+  text-align: center;
 }
 
-/* Navigation links container */
 .nav-links {
-  flex: 1;
-  width: 355px;
-  height: 38px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 27px;
+  gap: 20px;
 }
 
-/* Each nav item */
 .nav-item {
   color: white;
-  font-size: 22px;
+  font-size: 18px;
   font-family: 'Lato', sans-serif;
   font-weight: 400;
-  letter-spacing: 1.25px;
   cursor: pointer;
   white-space: nowrap;
+  transition: color 0.3s ease;
 }
 
-/* Active nav item: Bold */
-.nav-item.active {
-  font-weight: bold;
-  color: white;
-}
 
-/* Sign In button */
-.signin-button {
-  width: 170px;
-  height: 52px;
-  background: #c55a2b;
-  border-radius: 13px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+/* for the hamburger icon */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
   cursor: pointer;
 }
 
-.signup-text {
-  color: white;
-  font-size: 21px;
-  font-family: 'Merriweather', serif;
-  font-weight: 700;
-  letter-spacing: 1.05px;
+.bar {
+  width: 30px;
+  height: 4px;
+  background: white;
+  transition: 0.3s;
+}
+
+
+.nav-links.open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  background: black;
+  padding: 20px 0;
+  gap: 15px;
+  align-items: center;
+}
+
+/* added for effect when clicking hamburger icon */
+.bar.open:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.bar.open:nth-child(2) {
+  opacity: 0;
+}
+
+.bar.open:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* for minimizing screen */
+@media screen and (max-width: 868px) {
+  .nav-links {
+    display: none; 
+  }
+
+  .hamburger {
+    display: flex; 
+  }
+
+  
+  .nav-links.open {
+    display: flex;
+  }
 }

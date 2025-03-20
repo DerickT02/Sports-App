@@ -18,7 +18,7 @@ html, body {
 /*   HOMEPAGE WRAPPER           */
 /* ============================= */
 .homepage-wrapper {
-  position: relative; 
+  position: relative;
   width: 100%;
   min-height: 100vh;
 }
@@ -27,39 +27,26 @@ html, body {
 /*   MAIN CONTENT               */
 /* ============================= */
 .main-content {
-  /* If you have a fixed nav, this spacing prevents overlap */
-  padding-top: 180px; 
+  padding-top: 690px; 
   width: 100%;
-  min-height: 100px; /* ensures content extends if needed */
-  position: relative; 
-  z-index: 2; /* ensures it’s above any background elements */
+  min-height: 100px; 
+  position: relative;
+  z-index: 2; 
 }
 
-/* 
-  If you want a specific scrolling region, define it here. 
-  Otherwise, you can omit or adjust as needed.
-*/
 .scrollable-content {
-  /* For example, if you want to constrain height and scroll:
-     max-height: calc(100vh - 180px);
-     overflow-y: auto;
-  */
+  display: flex;
+  flex-direction: column;
+  gap: 40px; 
 }
 
-/* ============================= */
-/*   RESPONSIVE TEXT CONTAINER  */
-/* ============================= */
 .responsive-text-container {
-  /* This large padding top ensures the text is “pushed down” 
-     as in your original design. Adjust to taste. */
-  padding-top: 300px;
+  text-align: center; 
+  padding: 20px 0;
+  margin-top: -50px; 
 }
 
-/* ============================= */
-/*   STYLES FOR THE TEXT BLOCKS */
-/* ============================= */
 .unlock-text,
-.nil-text,
 .space-text,
 .team-text {
   font-family: 'Bodoni MT', serif;
@@ -75,11 +62,6 @@ html, body {
   font-size: 44px;
 }
 
-.nil-text {
-  color: #c55a2b;
-  font-size: 44px;
-}
-
 .space-text {
   color: #f5f5dc;
   font-size: 44px;
@@ -92,26 +74,7 @@ html, body {
   letter-spacing: 0.92px;
 }
 
-/* ============================= */
-/*   SLIDER IMAGE STYLING       */
-/* ============================= */
-.slider-image-container {
-  width: 100%;
-  max-width: 1920px;
-  margin: 0 auto; /* center the container */
-  padding: 20px 0; 
-}
 
-.slider-image {
-  width: 100%;
-  height: auto;
-  max-height: 400px;
-  object-fit: cover;
-}
-
-/* ============================= */
-/*   "WHY CHOOSE US?" TEXT      */
-/* ============================= */
 .why-choose-us {
   text-align: center;
   color: #f5f5dc;
@@ -124,9 +87,7 @@ html, body {
   margin-bottom: 50px;
 }
 
-/* ============================= */
-/*   THREE-COLUMN LAYOUT        */
-/* ============================= */
+
 .athlete-first-container {
   display: flex;
   justify-content: space-between; /* spread out the 3 columns */

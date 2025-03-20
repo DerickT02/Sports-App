@@ -30,8 +30,9 @@
 }
 
 .logo-image {
-  width: 109.14px;
-  height: 110.6px;
+  max-width: 109.14px;
+  width: auto;
+  max-height: 110.6px;
   border-radius: 54.57px;
 }
 

@@ -10,7 +10,7 @@ import { FullPageBackground, FullPageCenter } from './components/layout/atoms'
 // import BackgroundImage from './assets/background.png'
 
 // Pages
-import HomePage from './pages/homepage'
+import HomePage from './pages/homepage/Index'
 import AboutUs from './pages/about'
 import ShowCase from './pages/athletes/ShowCase'
 import ContactUs from './pages/contact'

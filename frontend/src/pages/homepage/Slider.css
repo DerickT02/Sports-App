@@ -1,56 +1,25 @@
-/* Slider Container */
+.slider {
+  display: flex;
+  overflow-x: scroll;
+  gap: 40px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
 .slider-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 20px 0;
-  }
-  
-  /* Slider */
-  .slider {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    width: 100%; /* adjust the width of the slider */
-    gap: 20px; /* add spacing between cards */
-    padding: 10px;
-  }
-  
-  /* hide scrollbar for a cleaner look */
-  .slider::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Arrows */
-  .arrow {
-    background: rgba(0, 0, 0, 0.5);
-    border: none;
-    color: white;
-    font-size: 24px;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
-  
-  .arrow:hover {
-    background: rgba(0, 0, 0, 0.8);
-  }
-  
-  .left-arrow {
-    left: 10px; /* position the left arrow */
-  }
-  
-  .right-arrow {
-    right: 10px; /* position the right arrow */
-  }
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.slider-track {
+  display: flex;
+  gap: 40px;
+  transition: transform 0.6s ease-in-out;
+  will-change: transform;
+}
+

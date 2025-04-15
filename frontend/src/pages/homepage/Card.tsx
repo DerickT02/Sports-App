@@ -1,21 +1,57 @@
 import React from 'react';
-import './Card.css'; // Import the CSS file for the card
 
 interface CardProps {
   image: string;
   title: string;
-  description: string;
+  active: boolean;
+  index: number;
+  activeIndex: number;
 }
 
-const Card: React.FC<CardProps> = ({ image, title, description }) => {
+const Card: React.FC<CardProps> = ({ image, title, active = false, index, activeIndex }) => {
+  const offsetIndex = Math.abs(index - activeIndex);
+  const offset = active ? 0 : offsetIndex * 30;
+
   return (
-    <div className="card">
-      <img src={image} alt={title} className="card-image" />
-      <div className="card-content">
-        <h3 className="card-title">{title}</h3>
-        <p className="card-description">{description}</p>
+    <div
+    style={{
+      flex: '0 0 auto',
+      height: 360, // Enough to accommodate all offsets
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      transition: 'opacity 0.4s',
+      opacity: active ? 1 : 0.25,
+      scrollSnapAlign: 'center',
+    }}
+  >
+    <div style={{ paddingTop: `${offset}px`, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem' }}>
+      <img
+        src={image}
+        alt={title}
+        style={{
+          width: 260,
+          height: 260,
+          borderRadius: 21,
+          border: '0.66px rgba(255, 255, 255, 0.15) solid',
+          objectFit: 'cover',
+        }}
+      />
+      <div
+        style={{
+          color: 'white',
+          fontSize: 32,
+          fontWeight: 700,
+          fontFamily: 'Satoshi Variable',
+          textShadow: '0px 3px 16px rgba(0, 0, 0, 0.25)',
+        }}
+      >
+        {title}
       </div>
     </div>
+  </div>
+  
   );
 };
 

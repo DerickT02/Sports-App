@@ -17,6 +17,8 @@ import ContactUs from './pages/contact'
 import Services from './pages/services'
 import SignIn from './pages/signin'
 import Resources from './pages/resources'
+import AdminHome from "./pages/admin"
+import ManageAthlete from "./pages/admin/ManageAthlete"
 
 
 
@@ -47,6 +49,8 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/admin-home" element={<AdminHome />} />
+            <Route path="/admin-Manage_Athlete" element={<ManageAthlete />} />
           </Routes>
         </FullPageCenter>
       </Router>

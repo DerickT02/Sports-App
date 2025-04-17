@@ -32,7 +32,7 @@ html {
 }
 
 body {
-  background: inherit;
+  background: var(--color-bg);
   color: var(--color-text);
   font-family: 'Lato', sans-serif;
   min-height: 100vh;

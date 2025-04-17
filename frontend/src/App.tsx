@@ -6,9 +6,6 @@ import './App.css'
 import NavBar from './components/layout/NavBar'
 import { FullPageBackground, FullPageCenter } from './components/layout/atoms'
 
-//Assets
-// import BackgroundImage from './assets/background.png'
-
 // Pages
 import HomePage from './pages/homepage'
 import AboutUs from './pages/about'
@@ -17,6 +14,9 @@ import ContactUs from './pages/contact'
 import Services from './pages/services'
 import SignIn from './pages/signin'
 import Resources from './pages/resources'
+import AdminHome from "./pages/admin"
+import ManageAthlete from "./pages/admin/ManageAthlete"
+import AthletePortfolio from './pages/athletes/Portfolio'
 
 
 
@@ -26,10 +26,10 @@ function App() {
       {/* 1) Full-page background behind everything */}
       <FullPageBackground
         style={{
-          // backgroundImage: `url(${BackgroundImage})`, // Replace with your real path
+          // backgroundImage: `url(${BackgroundImage})`,
           backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}
       />
 
@@ -43,10 +43,13 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/athletes" element={<ShowCase />} />
+            <Route path="/athletes/:id" element={<AthletePortfolio />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/services" element={<Services />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/admin-home" element={<AdminHome />} />
+            <Route path="/admin-Manage_Athlete" element={<ManageAthlete />} />
           </Routes>
         </FullPageCenter>
       </Router>

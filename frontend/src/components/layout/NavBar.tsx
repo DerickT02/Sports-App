@@ -1,92 +1,98 @@
-import React from 'react'
+// src/components/layout/NavBar.tsx
+import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import './NavBar.css'
-import logo from '../../assets/ClientLogo.png'
+import { FaMoon, FaSun } from 'react-icons/fa'
+import {
+  HeaderContainer,
+  HeaderContent,
+  LogoSection,
+  LogoImage,
+  Divider,
+  LogoText,
+  NavLinks,
+  NavItem,
+  HamburgerButton,
+  MobileMenu,
+  ThemeIcon,
+  SignInButton,
+  SignUpText,
+  RightSideUtility,
+} from './NavBar.styles'
 
-export default function NavBar() {
+import { useTheme } from '../../context/ThemeContext';
+import Logo from '../../assets/ClientLogo.png';
+
+const navItems = [
+  { label: 'About Us', route: '/about-us' },
+  { label: 'Athletes', route: '/athletes' },
+  { label: 'Services', route: '/services' },
+  { label: 'Resources', route: '/resources' },
+  { label: 'Contact Us', route: '/contact-us' },
+  { label: 'Admin', route: '/admin-home', style: { color: 'red' } },
+]
+
+const NavBar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const isActive = (route: string) => location.pathname === route
 
-  // Helper function: checks if the current route is active
-  const isActive = (path: string): boolean => location.pathname === path
+  const {isDark, toggleTheme } = useTheme();
 
   return (
-    <div className="header-container">
-      <div className="header-content">
-        {/* Logo + Divider + Text */}
-        <div
-          className="logo-section"
-          onClick={() => navigate('/')}
-          style={{ cursor: 'pointer' }}
-        >
-          <img src={logo} alt="Logo" className="logo-image" />
-          <svg
-            className="divider"
-            width="2"
-            height="62"
-            viewBox="0 0 2 62"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0.946899 0.787964V61.5172"
-              stroke="white"
-              strokeWidth="1.67915"
-            />
-          </svg>
-          <div className="logo-text">
-            PLAYERS<br />CLUB<br />MANAGMENT
-          </div>
-        </div>
+  <HeaderContainer>
+       <HeaderContent>
+       <LogoSection>
+  <LogoImage src={Logo} alt="Logo" />
+  <Divider />
+  <LogoText>Players Club Management</LogoText>
+</LogoSection>
+          
+          {/* Desktop Links */}
+          <NavLinks>
+            {navItems.map((item, idx) => (
+              <NavItem
+                key={idx}
+                onClick={() => { navigate(item.route); setMenuOpen(false) }}
+                className={isActive(item.route) ? 'active' : ''}
+                style={item.style}
+              >
+                {item.label}
+              </NavItem>
+            ))}
+          </NavLinks>
 
-        {/* Navigation Links */}
-        <div className="nav-links">
-          <div
-            className={`nav-item ${isActive('/about-us') ? 'active' : ''}`}
-            onClick={() => navigate('/about-us')}
-            style={{ cursor: 'pointer' }}
-          >
-            About Us
-          </div>
-          <div
-            className={`nav-item ${isActive('/athletes') ? 'active' : ''}`}
-            onClick={() => navigate('/athletes')}
-            style={{ cursor: 'pointer' }}
-          >
-            Athletes
-          </div>
-          <div
-            className={`nav-item ${isActive('/services') ? 'active' : ''}`}
-            onClick={() => navigate('/services')}
-            style={{ cursor: 'pointer' }}
-          >
-            Services
-          </div>
-          <div
-            className={`nav-item ${isActive('/resources') ? 'active' : ''}`}
-            onClick={() => navigate('/resources')}
-            style={{ cursor: 'pointer' }}
-          >
-            Resources
-          </div>
-          <div
-            className={`nav-item ${isActive('/contact-us') ? 'active' : ''}`}
-            onClick={() => navigate('/contact-us')}
-            style={{ cursor: 'pointer' }}
-          >
-            Contact Us
-          </div>
-        </div>
+          {/* Hamburger for Mobile */}
+          <HamburgerButton onClick={() => setMenuOpen(o => !o)}>☰</HamburgerButton>
 
-        {/* Sign In */}
-        <div
-          className="signin-button"
-          onClick={() => navigate('/sign-in')}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className="signup-text">Sign In</div>
-        </div>
-      </div>
-    </div>
+        <RightSideUtility>
+          {/* Theme Toggle Icon */}
+          <ThemeIcon onClick={toggleTheme}>
+            {isDark ? <FaSun /> : <FaMoon />}
+          </ThemeIcon>
+
+          {/* Sign In */}
+          <SignInButton onClick={() => { navigate('/sign-in'); setMenuOpen(false) }}>
+            <SignUpText>Sign In</SignUpText>
+          </SignInButton>
+        </RightSideUtility>
+      </HeaderContent>
+
+      {/* Mobile Menu */}
+      <MobileMenu open={menuOpen}>
+        {navItems.map((item, idx) => (
+          <NavItem
+            key={idx}
+            onClick={() => { navigate(item.route); setMenuOpen(false) }}
+            className={isActive(item.route) ? 'active' : ''}
+            style={item.style}
+          >
+            {item.label}
+          </NavItem>
+        ))}
+      </MobileMenu>
+   </HeaderContainer>
   )
 }
+
+export default NavBar

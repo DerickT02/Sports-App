@@ -156,7 +156,10 @@ const Contact: React.FC = () => {
             type="text"
             id="fullName"
             value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setFullName(e.target.value);
+            }}
+            
             required
           />
 
@@ -165,7 +168,10 @@ const Contact: React.FC = () => {
             type="email"
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setFullName(e.target.value);
+            }}
+            
             required
           />
 
@@ -173,7 +179,10 @@ const Contact: React.FC = () => {
           <TextArea
             id="message"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setFullName(e.target.value);
+            }}
+            
             required
           />
 

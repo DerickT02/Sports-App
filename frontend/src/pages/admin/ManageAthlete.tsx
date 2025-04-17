@@ -6,7 +6,7 @@ import { dummyAthletes } from './dummyAthletes';
 import {
   PageContainer, ToggleContainer, ToggleButton, Section, StyledInput, StyledSelect,
   StyledTextarea, ListContainer, AvailableItem, ActiveCardContainer, ControlRow,
-  ControlButton, SaveButton, ClearButton, ActionContainer, ActiveCardsWrapper
+  SaveButton, ClearButton, ActionContainer, ActiveCardsWrapper
 } from './manageathlete.styles';
 import { Box, Vertical } from '../../components/layout/atoms';
 

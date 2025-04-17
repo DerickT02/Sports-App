@@ -40,7 +40,7 @@ export const LogoSection = styled(Box)`
   color: var(--color-heading); // key for theme adaptation
 `;
 
-export const LogoIcon = styled(LogoSvg)`
+export const LogoIcon = styled(LogoSVG)`
   width: 110px;
   height: 110px;
   fill: currentColor;

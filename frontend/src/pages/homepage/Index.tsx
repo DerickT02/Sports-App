@@ -1,5 +1,4 @@
 import React from 'react'
-import sliderImage from '../../assets/SlideNumber.png'
 import Slider from './Slider'
 import './HomePage.css'
 

@@ -1,50 +1,105 @@
 import React from 'react';
-import './Resources.css';
+import styled from 'styled-components';
 
+/* ---------- Styled Components ---------- */
+const Page = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: var(--color-text);
+  font-family: 'Lato', sans-serif;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-heading);
+`;
+
+const Content = styled.div`
+  margin-top: 2rem;
+`;
+
+const Section = styled.section`
+  margin-bottom: 3rem;
+`;
+
+const Subtitle = styled.h2`
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--color-primary);
+`;
+
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const ListItem = styled.li`
+  background: rgba(0, 0, 0, 0.2);
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+`;
+
+const ResourceHeading = styled.h3`
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+`;
+
+const ResourceText = styled.p`
+  font-size: 1rem;
+  line-height: 1.6;
+`;
+
+/* ---------- Main Component ---------- */
 const Resources: React.FC = () => {
   return (
-    <div className="resources-page">
-      <h1 className="resources-title">Resources</h1>
-      <div className="resources-content">
+    <Page>
+      <Title>Resources</Title>
+      <Content>
         {/* Section for Athletes */}
-        <section className="resource-section">
-          <h2 className="resources-subtitle">For Athletes:</h2>
-          <ul className="resources-list">
-            <li>
-              <h3>Financial Literacy</h3>
-              <p>Workshops on managing NIL earnings.</p>
-            </li>
-            <li>
-              <h3>Brand Building</h3>
-              <p>Tools and tips for crafting your personal brand.</p>
-            </li>
-            <li>
-              <h3>Contract Review</h3>
-              <p>Guidance on understanding and negotiating contracts.</p>
-            </li>
-          </ul>
-        </section>
+        <Section>
+          <Subtitle>For Athletes:</Subtitle>
+          <List>
+            <ListItem>
+              <ResourceHeading>Financial Literacy</ResourceHeading>
+              <ResourceText>Workshops on managing NIL earnings.</ResourceText>
+            </ListItem>
+            <ListItem>
+              <ResourceHeading>Brand Building</ResourceHeading>
+              <ResourceText>Tools and tips for crafting your personal brand.</ResourceText>
+            </ListItem>
+            <ListItem>
+              <ResourceHeading>Contract Review</ResourceHeading>
+              <ResourceText>Guidance on understanding and negotiating contracts.</ResourceText>
+            </ListItem>
+          </List>
+        </Section>
 
         {/* Section for Sponsors */}
-        <section className="resource-section">
-          <h2 className="resources-subtitle">For Sponsors:</h2>
-          <ul className="resources-list">
-            <li>
-              <h3>Brand Athlete Partnerships</h3>
-              <p>Connect with athletes who align with your brand’s values.</p>
-            </li>
-            <li>
-              <h3>Marketing Campaigns</h3>
-              <p>Support in creating engaging campaigns that resonate with audiences.</p>
-            </li>
-            <li>
-              <h3>Campaign Metrics</h3>
-              <p>Track the impact and success of your collaborations with athletes.</p>
-            </li>
-          </ul>
-        </section>
-      </div>
-    </div>
+        <Section>
+          <Subtitle>For Sponsors:</Subtitle>
+          <List>
+            <ListItem>
+              <ResourceHeading>Brand Athlete Partnerships</ResourceHeading>
+              <ResourceText>Connect with athletes who align with your brand’s values.</ResourceText>
+            </ListItem>
+            <ListItem>
+              <ResourceHeading>Marketing Campaigns</ResourceHeading>
+              <ResourceText>Support in creating engaging campaigns that resonate with audiences.</ResourceText>
+            </ListItem>
+            <ListItem>
+              <ResourceHeading>Campaign Metrics</ResourceHeading>
+              <ResourceText>Track the impact and success of your collaborations with athletes.</ResourceText>
+            </ListItem>
+          </List>
+        </Section>
+      </Content>
+    </Page>
   );
 };
 

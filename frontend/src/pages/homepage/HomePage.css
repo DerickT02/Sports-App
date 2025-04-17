@@ -125,17 +125,21 @@ html, body {
   margin-top: 8px;
 }
 
+
 .title {
   padding-top: 200px;
 }
 
 .title-text {
+
   font-family: 'Lato', sans-serif;
   font-size: 100px;
   font-weight: 100;
 }
 
+
 .info {
+
   font-size: 100px;
   margin-top: 200px;
 }
@@ -152,11 +156,13 @@ html, body {
 .info-card {
   flex: 1;
   min-width: 280px;
+
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.5rem;
   color: var(--color-text);
+
   text-align: left;
   box-shadow: 0 0 15px rgba(108, 160, 220, 0.1);
   transition: transform 0.3s ease;
@@ -174,4 +180,6 @@ html, body {
 .info-card p {
   font-size: 1rem;
   line-height: 1.5;
+
 }
+

@@ -1,6 +1,4 @@
 import styled, { css } from 'styled-components';
-import { ReactComponent as LogoSVG } from '../../assets/logo.svg'; // adjust path as needed
-
 
 import { Box, Horizontal } from '../layout/atoms';
 
@@ -37,15 +35,14 @@ export const LogoSection = styled(Box)`
   display: flex;
   align-items: center;
   cursor: pointer;
-  color: var(--color-heading); // key for theme adaptation
 `;
 
-export const LogoIcon = styled(LogoSVG)`
-  width: 110px;
-  height: 110px;
-  fill: currentColor;
-  transition: fill 0.3s ease;
+export const LogoImage = styled.img`
+  width: 109.14px;
+  height: 110.6px;
+  border-radius: 54.57px;
 `;
+
 
 // Divider SVG: thicker, taller, accent color
 export const Divider = styled.svg`

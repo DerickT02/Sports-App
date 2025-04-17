@@ -6,6 +6,9 @@ import {
   HeaderContainer,
   HeaderContent,
   LogoSection,
+  LogoImage,
+  Divider,
+  LogoText,
   NavLinks,
   NavItem,
   HamburgerButton,
@@ -17,7 +20,7 @@ import {
 } from './NavBar.styles'
 
 import { useTheme } from '../../context/ThemeContext';
-import LogoIcon from '../../assets/ClientLogo.png'
+import Logo from '../../assets/ClientLogo.png';
 
 const navItems = [
   { label: 'About Us', route: '/about-us' },
@@ -39,10 +42,12 @@ const NavBar: React.FC = () => {
   return (
   <HeaderContainer>
        <HeaderContent>
-          <LogoSection>
-            <LogoIcon />
-          </LogoSection>
-
+       <LogoSection>
+  <LogoImage src={Logo} alt="Logo" />
+  <Divider />
+  <LogoText>Players Club Management</LogoText>
+</LogoSection>
+          
           {/* Desktop Links */}
           <NavLinks>
             {navItems.map((item, idx) => (

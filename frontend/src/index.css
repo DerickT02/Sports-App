@@ -1,6 +1,6 @@
 :root {
   /* ─── LIGHT MODE ─── */
-  --color-bg:       #cecece;
+  --color-bg:       #e0e0e0;
   --color-surface:  #FFFFFF;
   --color-text:     #333333;
   --color-heading:  #111111;
@@ -12,16 +12,14 @@
 
 [data-theme="dark"] {
   /* ─── DARK MODE ─── */
-  --color-bg:       #121212;
+  --color-bg:       #161616;
   --color-surface:  #1E1E1E;
-  --color-text:     #E0E0E0;
+  --color-text:     #e0e0e0;
   --color-heading:  #FFFFFF;
   --color-primary:  #E38A5B;
   --color-muted:    #AAAAAA;
   --color-border:   #333333;
 }
-
-
 
 html {
   height: 100%;
@@ -83,4 +81,13 @@ a:hover {
 
 .section + .section {
   border-top: 1px solid var(--color-border);
+}
+
+input {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.6rem;
+  font-family: inherit;
 }

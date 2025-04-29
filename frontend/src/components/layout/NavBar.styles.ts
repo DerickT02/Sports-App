@@ -23,7 +23,7 @@ export const HeaderContainer = styled(Box)`
 // Content wrapper inside header
 export const HeaderContent = styled(Box)`
   max-width: 1920px;
-  height: 110.6px;
+  height: auto;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -41,6 +41,7 @@ export const LogoImage = styled.img`
   width: 109.14px;
   height: 110.6px;
   border-radius: 54.57px;
+  margin: 5px;
 `;
 
 
@@ -63,6 +64,10 @@ export const LogoText = styled(Box)`
   font-family: 'Bodoni Moda', serif;
   font-weight: 900;
   letter-spacing: 0.67px;
+
+  @media (max-width: ${breakingPointPx}px) {
+    display: none;
+  }
 `;
 
 export const NavLinks = styled(Box)`

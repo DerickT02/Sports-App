@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { dummyAthletes } from '..//admin/dummyAthletes';
+import Footer from '../../components/Footer';
 
 /* ---------- Styled Components ---------- */
 const ShowcaseContainer = styled.div`
@@ -9,6 +10,7 @@ const ShowcaseContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
   padding: 2rem;
+  padding-top: 300px;
   box-sizing: border-box;
   justify-content: center;
 `;
@@ -54,26 +56,29 @@ const AthleteText = styled.p`
 /* ---------- Main Component ---------- */
 export default function ShowCase() {
   return (
-    <ShowcaseContainer>
-      {dummyAthletes.map((athlete, index) => (
-        <Link
-          key={index}
-          to={`/athletes/${athlete._id}`}
-          style={{ textDecoration: 'none' }}
-        >
-          <ShowcaseCard>
-            <ShowcasePhoto
-              src={athlete.portraitPhoto || ''}
-              alt={`${athlete.firstName} ${athlete.lastName}`}
-            />
-            <AthleteName>
-              {athlete.firstName} {athlete.lastName}
-            </AthleteName>
-            <AthleteText>Sport: {athlete.sports}</AthleteText>
-            <AthleteText>Grade: {athlete.year}</AthleteText>
-          </ShowcaseCard>
-        </Link>
-      ))}
-    </ShowcaseContainer>
+    <>
+      <ShowcaseContainer>
+        {dummyAthletes.map((athlete, index) => (
+          <Link
+            key={index}
+            to={`/athletes/${athlete._id}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <ShowcaseCard>
+              <ShowcasePhoto
+                src={athlete.portraitPhoto || ''}
+                alt={`${athlete.firstName} ${athlete.lastName}`}
+              />
+              <AthleteName>
+                {athlete.firstName} {athlete.lastName}
+              </AthleteName>
+              <AthleteText>Sport: {athlete.sports}</AthleteText>
+              <AthleteText>Grade: {athlete.year}</AthleteText>
+            </ShowcaseCard>
+          </Link>
+        ))}
+      </ShowcaseContainer>
+    </>
+    
   );
 }

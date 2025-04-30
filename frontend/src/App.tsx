@@ -1,5 +1,6 @@
 //External imports
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import styled from 'styled-components'
 
 //Domestic imports
 import './App.css'
@@ -18,15 +19,27 @@ import AdminHome from "./pages/admin"
 import ManageAthlete from "./pages/admin/ManageAthlete"
 import AthletePortfolio from './pages/athletes/Portfolio'
 
+const AppContainer = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 0;
+  padding: 0;
+`;
 
+const MainContent = styled.main`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
 function App() {
   return (
-    <>
-      {/* 1) Full-page background behind everything */}
+    <AppContainer>
       <FullPageBackground
         style={{
-          // backgroundImage: `url(${BackgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -34,11 +47,8 @@ function App() {
       />
 
       <Router>
-        {/* 2) Your NavBar (fixed or top-aligned as desired) */}
         <NavBar />
-
-        {/* 3) FullPageCenter to center page content vertically (optional) */}
-        <FullPageCenter minHeight="100vh" flexDirection="column">
+        <MainContent>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about-us" element={<AboutUs />} />
@@ -51,9 +61,9 @@ function App() {
             <Route path="/admin-home" element={<AdminHome />} />
             <Route path="/admin-Manage_Athlete" element={<ManageAthlete />} />
           </Routes>
-        </FullPageCenter>
+        </MainContent>
       </Router>
-    </>
+    </AppContainer>
   )
 }
 

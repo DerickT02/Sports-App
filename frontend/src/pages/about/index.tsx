@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import './About.css';
+import Footer from '../../components/Footer';
 
 interface TeamMember {
   name: string;
@@ -24,7 +25,7 @@ const teamMembers: TeamMember[] = [
     name: 'David Zuniga',
     title: 'Business Development Director',
     description:
-      'With expertise in partnership development, David ensures athletes’ NIL deals align with their goals, creating lasting collaborations between athletes and brands.',
+      'With expertise in partnership development, David ensures athletes NIL deals align with their goals, creating lasting collaborations between athletes and brands.',
   },
   {
     name: 'Santana Zuniga',
@@ -68,118 +69,32 @@ const faqs: FAQ[] = [
 
 const AboutUs = () => {
   return (
-    <Wrapper>
-      <Title>About Us</Title>
-      <TeamSection>
-        {teamMembers.map((member, index) => (
-          <Card key={index}>
-            <Photo />
-            <Name>{member.name}</Name>
-            <Role>{member.title}</Role>
-            <Bio>{member.description}</Bio>
-          </Card>
-        ))}
-      </TeamSection>
-      <FAQHeading>Frequently Asked Questions (FAQ)</FAQHeading>
-      <FAQSection>
-        {faqs.map((faq, index) => (
-          <FAQCard key={index}>
-            <Question>{faq.question}</Question>
-            <Answer>{faq.answer}</Answer>
-          </FAQCard>
-        ))}
-      </FAQSection>
-    </Wrapper>
+    <div className="about-wrapper">
+      <div className="about-content">
+        <h1>About Us</h1>
+        <div className="team-section">
+          {teamMembers.map((member, index) => (
+            <div className="card" key={index}>
+              <div className="photo" />
+              <h3 className="name">{member.name}</h3>
+              <p className="role">{member.title}</p>
+              <p className="bio">{member.description}</p>
+            </div>
+          ))}
+        </div>
+        <h2 className="faq-heading">Frequently Asked Questions (FAQ)</h2>
+        <div className="faq-section">
+          {faqs.map((faq, index) => (
+            <div className="faq-card" key={index}>
+              <h3 className="question">{faq.question}</h3>
+              <p className="answer">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
 
 export default AboutUs;
-
-const Wrapper = styled.div`
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  color: var(--color-text);
-  font-family: 'Lato', sans-serif;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: var(--color-heading);
-`;
-
-const TeamSection = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 2rem;
-  margin-bottom: 3rem;
-`;
-
-const Card = styled.div`
-  flex: 1;
-  min-width: 280px;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  padding: 1rem;
-  text-align: center;
-`;
-
-const Photo = styled.div`
-  width: 150px;
-  height: 150px;
-  margin: 0 auto 1rem auto;
-  background-color: #ccc;
-  border-radius: 50%;
-`;
-
-const Name = styled.h3`
-  font-size: 1.4rem;
-  margin-bottom: 0.3rem;
-`;
-
-const Role = styled.p`
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: var(--color-primary);
-  margin-bottom: 0.5rem;
-`;
-
-const Bio = styled.p`
-  font-size: 1rem;
-  line-height: 1.4;
-`;
-
-const FAQHeading = styled.h2`
-  font-size: 1.8rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  color: var(--color-heading);
-`;
-
-const FAQSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`;
-
-const FAQCard = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 1rem;
-  border-radius: 8px;
-`;
-
-const Question = styled.h3`
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--color-primary);
-`;
-
-const Answer = styled.p`
-  font-size: 1rem;
-  line-height: 1.6;
-`;

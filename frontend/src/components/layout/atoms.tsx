@@ -82,7 +82,7 @@ export const Vertical = styled.div<Props>`
 export const FullPageCenter = styled.div<Props>`
   display: flex;
   justify-content: center;
-  min-height: 80vh;
+  width: 100%;
   ${space};
   ${color};
   ${layout};

@@ -78,7 +78,7 @@ export default function ShowCase() {
           </Link>
         ))}
       </ShowcaseContainer>
+      <Footer />
     </>
-    
   );
 }

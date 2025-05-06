@@ -8,7 +8,8 @@ import { DataCard } from '../../../../shared/types/dataCard';
 const PageContainer = styled.div`
   max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: .5 rem;
+  padding-top: 100px;
   color: var(--color-text);
   font-family: 'Lato', sans-serif;
 `;
@@ -23,7 +24,7 @@ const Header = styled.div`
 const Portrait = styled.img`
   width: 200px;
   height: 200px;
-  border-radius: 12px;
+  border-radius: 10px;
   object-fit: cover;
   background: #ccc;
 `;

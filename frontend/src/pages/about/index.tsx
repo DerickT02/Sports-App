@@ -102,6 +102,10 @@ const Wrapper = styled.div`
   padding: 2rem;
   color: var(--color-text);
   font-family: 'Lato', sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Title = styled.h1`
@@ -109,6 +113,10 @@ const Title = styled.h1`
   font-size: 2.5rem;
   margin-bottom: 2rem;
   color: var(--color-heading);
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const TeamSection = styled.div`
@@ -117,6 +125,11 @@ const TeamSection = styled.div`
   justify-content: space-between;
   gap: 2rem;
   margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Card = styled.div`
@@ -125,7 +138,13 @@ const Card = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   padding: 1rem;
+  padding-top: 30px;
   text-align: center;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const Photo = styled.div`
@@ -139,6 +158,10 @@ const Photo = styled.div`
 const Name = styled.h3`
   font-size: 1.4rem;
   margin-bottom: 0.3rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const Role = styled.p`
@@ -146,11 +169,19 @@ const Role = styled.p`
   font-weight: bold;
   color: var(--color-primary);
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const Bio = styled.p`
   font-size: 1rem;
   line-height: 1.4;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const FAQHeading = styled.h2`
@@ -158,6 +189,10 @@ const FAQHeading = styled.h2`
   margin-bottom: 2rem;
   text-align: center;
   color: var(--color-heading);
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const FAQSection = styled.div`
@@ -177,9 +212,17 @@ const Question = styled.h3`
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: var(--color-primary);
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const Answer = styled.p`
   font-size: 1rem;
   line-height: 1.6;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;

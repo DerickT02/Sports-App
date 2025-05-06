@@ -28,6 +28,7 @@ const navItems = [
   { label: 'Services', route: '/services' },
   { label: 'Resources', route: '/resources' },
   { label: 'Contact Us', route: '/contact-us' },
+  { label: 'Privacy Policy', route: './privacy-policy' },
   { label: 'Admin', route: '/admin-home', style: { color: 'red' } },
 ]
 

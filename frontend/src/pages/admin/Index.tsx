@@ -12,6 +12,10 @@ const PageContainer = styled(Vertical)`
   padding: 4rem 2rem;
   gap: 2rem;
   background-color: var(--color-bg);
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 const Title = styled.h1`
@@ -19,11 +23,19 @@ const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
+  width: 100%;
+  word-wrap: break-word; /* Ensures the title wraps properly on smaller screens */
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const ActionCard = styled(Horizontal)`
-  width: 250px;
-  height: 80px;
+  width: 100%; /* Ensures the ActionCard is fully responsive */
+  max-width: 300px; /* Allowing it to scale */
+  min-width: 200px; /* Prevents shrinking too much */
+  height: auto;
   padding: 1rem;
   border-radius: 12px;
   border: 1px solid var(--color-border);
@@ -33,10 +45,18 @@ const ActionCard = styled(Horizontal)`
   justify-content: space-between;
   cursor: pointer;
   transition: all 0.2s ease;
+  margin: 0 auto;
+  box-sizing: border-box;
 
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%; /* Ensures it takes full width in portrait mode */
+    height: auto; /* Remove fixed height */
+    padding: 1rem; /* Adjust padding for smaller screens */
   }
 `;
 
@@ -44,11 +64,20 @@ const ActionLabel = styled(Box)`
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--color-text);
+  word-wrap: break-word; /* Prevents the text from getting cropped in narrow containers */
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const ActionIcon = styled(Box)`
   font-size: 1.5rem;
   color: var(--color-primary);
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem; /* Adjust icon size on mobile */
+  }
 `;
 
 /* ---------- Component ---------- */

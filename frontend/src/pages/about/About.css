@@ -1,0 +1,86 @@
+.about-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.about-content {
+  width: 100%;
+  min-height: 100px;
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+
+.team-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.card {
+  flex: 1;
+  min-width: 280px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.photo {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1rem auto;
+  background-color: #ccc;
+  border-radius: 50%;
+}
+
+.name {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.role {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.bio {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.faq-heading {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--color-heading);
+}
+
+.faq-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.faq-card {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.question {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+}
+
+.answer {
+  font-size: 1rem;
+  line-height: 1.6;
+} 

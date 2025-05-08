@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import './About.css';
+import Footer from '../../components/Footer';
 
 interface TeamMember {
   name: string;
@@ -24,7 +25,7 @@ const teamMembers: TeamMember[] = [
     name: 'David Zuniga',
     title: 'Business Development Director',
     description:
-      'With expertise in partnership development, David ensures athletes’ NIL deals align with their goals, creating lasting collaborations between athletes and brands.',
+      'With expertise in partnership development, David ensures athletes NIL deals align with their goals, creating lasting collaborations between athletes and brands.',
   },
   {
     name: 'Santana Zuniga',
@@ -68,32 +69,36 @@ const faqs: FAQ[] = [
 
 const AboutUs = () => {
   return (
-    <Wrapper>
-      <Title>About Us</Title>
-      <TeamSection>
-        {teamMembers.map((member, index) => (
-          <Card key={index}>
-            <Photo />
-            <Name>{member.name}</Name>
-            <Role>{member.title}</Role>
-            <Bio>{member.description}</Bio>
-          </Card>
-        ))}
-      </TeamSection>
-      <FAQHeading>Frequently Asked Questions (FAQ)</FAQHeading>
-      <FAQSection>
-        {faqs.map((faq, index) => (
-          <FAQCard key={index}>
-            <Question>{faq.question}</Question>
-            <Answer>{faq.answer}</Answer>
-          </FAQCard>
-        ))}
-      </FAQSection>
-    </Wrapper>
+    <div className="about-wrapper">
+      <div className="about-content">
+        <h1>About Us</h1>
+        <div className="team-section">
+          {teamMembers.map((member, index) => (
+            <div className="card" key={index}>
+              <div className="photo" />
+              <h3 className="name">{member.name}</h3>
+              <p className="role">{member.title}</p>
+              <p className="bio">{member.description}</p>
+            </div>
+          ))}
+        </div>
+        <h2 className="faq-heading">Frequently Asked Questions (FAQ)</h2>
+        <div className="faq-section">
+          {faqs.map((faq, index) => (
+            <div className="faq-card" key={index}>
+              <h3 className="question">{faq.question}</h3>
+              <p className="answer">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
 
 export default AboutUs;
+
 
 const Wrapper = styled.div`
   width: 100%;
@@ -226,3 +231,4 @@ const Answer = styled.p`
     font-size: 0.9rem;
   }
 `;
+

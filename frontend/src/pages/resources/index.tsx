@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Footer from '../../components/Footer';
 
 /* ---------- Styled Components ---------- */
 const Page = styled.div`
@@ -58,48 +59,51 @@ const ResourceText = styled.p`
 /* ---------- Main Component ---------- */
 const Resources: React.FC = () => {
   return (
-    <Page>
-      <Title>Resources</Title>
-      <Content>
-        {/* Section for Athletes */}
-        <Section>
-          <Subtitle>For Athletes:</Subtitle>
-          <List>
-            <ListItem>
-              <ResourceHeading>Financial Literacy</ResourceHeading>
-              <ResourceText>Workshops on managing NIL earnings.</ResourceText>
-            </ListItem>
-            <ListItem>
-              <ResourceHeading>Brand Building</ResourceHeading>
-              <ResourceText>Tools and tips for crafting your personal brand.</ResourceText>
-            </ListItem>
-            <ListItem>
-              <ResourceHeading>Contract Review</ResourceHeading>
-              <ResourceText>Guidance on understanding and negotiating contracts.</ResourceText>
-            </ListItem>
-          </List>
-        </Section>
+    <>
+      <Page>
+        <Title>Resources</Title>
+        <Content>
+          {/* Section for Athletes */}
+          <Section>
+            <Subtitle>For Athletes:</Subtitle>
+            <List>
+              <ListItem>
+                <ResourceHeading>Financial Literacy</ResourceHeading>
+                <ResourceText>Workshops on managing NIL earnings.</ResourceText>
+              </ListItem>
+              <ListItem>
+                <ResourceHeading>Brand Building</ResourceHeading>
+                <ResourceText>Tools and tips for crafting your personal brand.</ResourceText>
+              </ListItem>
+              <ListItem>
+                <ResourceHeading>Contract Review</ResourceHeading>
+                <ResourceText>Guidance on understanding and negotiating contracts.</ResourceText>
+              </ListItem>
+            </List>
+          </Section>
 
-        {/* Section for Sponsors */}
-        <Section>
-          <Subtitle>For Sponsors:</Subtitle>
-          <List>
-            <ListItem>
-              <ResourceHeading>Brand Athlete Partnerships</ResourceHeading>
-              <ResourceText>Connect with athletes who align with your brand’s values.</ResourceText>
-            </ListItem>
-            <ListItem>
-              <ResourceHeading>Marketing Campaigns</ResourceHeading>
-              <ResourceText>Support in creating engaging campaigns that resonate with audiences.</ResourceText>
-            </ListItem>
-            <ListItem>
-              <ResourceHeading>Campaign Metrics</ResourceHeading>
-              <ResourceText>Track the impact and success of your collaborations with athletes.</ResourceText>
-            </ListItem>
-          </List>
-        </Section>
-      </Content>
-    </Page>
+          {/* Section for Sponsors */}
+          <Section>
+            <Subtitle>For Sponsors:</Subtitle>
+            <List>
+              <ListItem>
+                <ResourceHeading>Brand Athlete Partnerships</ResourceHeading>
+                <ResourceText>Connect with athletes who align with your brand's values.</ResourceText>
+              </ListItem>
+              <ListItem>
+                <ResourceHeading>Marketing Campaigns</ResourceHeading>
+                <ResourceText>Support in creating engaging campaigns that resonate with audiences.</ResourceText>
+              </ListItem>
+              <ListItem>
+                <ResourceHeading>Campaign Metrics</ResourceHeading>
+                <ResourceText>Track the impact and success of your collaborations with athletes.</ResourceText>
+              </ListItem>
+            </List>
+          </Section>
+        </Content>
+      </Page>
+      <Footer />
+    </>
   );
 };
 

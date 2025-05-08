@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { dummyAthletes } from '../admin/dummyAthletes';
 import { DataCard } from '../../../../shared/types/dataCard';
+import Footer from '../../components/Footer';
 
 /* ---------- Styled Components ---------- */
 const PageContainer = styled.div`
@@ -75,37 +76,40 @@ export default function AthletePortfolio() {
   if (!athlete) return <PageContainer>Athlete not found.</PageContainer>;
 
   return (
-    <PageContainer>
-      <Header>
-        <Portrait src={athlete.portraitPhoto || ''} alt={athlete.firstName} />
-        <Info>
-          <Name>{athlete.firstName} {athlete.lastName}</Name>
-          <Label>Year: {athlete.year}</Label>
-          <Label>Sports: {athlete.sports}</Label>
-          {athlete.biography && <Label>{athlete.biography}</Label>}
-        </Info>
-      </Header>
+    <>
+      <PageContainer>
+        <Header>
+          <Portrait src={athlete.portraitPhoto || ''} alt={athlete.firstName} />
+          <Info>
+            <Name>{athlete.firstName} {athlete.lastName}</Name>
+            <Label>Year: {athlete.year}</Label>
+            <Label>Sports: {athlete.sports}</Label>
+            {athlete.biography && <Label>{athlete.biography}</Label>}
+          </Info>
+        </Header>
 
-      <Section>
-        <h2>Performance Cards</h2>
-        {athlete.portfolioData && athlete.portfolioData.length > 0 ? (
-          athlete.portfolioData.map((card: DataCard) => (
-            <CardContainer key={card.instanceId}>
-              <CardTitle>{card.title}</CardTitle>
-              {card.type === 'footballStats' && (
-                <>
-                  <Stat>Team: {card.data.teamName}</Stat>
-                  <Stat>Season: {card.data.season}</Stat>
-                  <Stat>Wins: {card.data.wins}</Stat>
-                  <Stat>Losses: {card.data.losses}</Stat>
-                </>
-              )}
-            </CardContainer>
-          ))
-        ) : (
-          <Label>No performance data available.</Label>
-        )}
-      </Section>
-    </PageContainer>
+        <Section>
+          <h2>Performance Cards</h2>
+          {athlete.portfolioData && athlete.portfolioData.length > 0 ? (
+            athlete.portfolioData.map((card: DataCard) => (
+              <CardContainer key={card.instanceId}>
+                <CardTitle>{card.title}</CardTitle>
+                {card.type === 'footballStats' && (
+                  <>
+                    <Stat>Team: {card.data.teamName}</Stat>
+                    <Stat>Season: {card.data.season}</Stat>
+                    <Stat>Wins: {card.data.wins}</Stat>
+                    <Stat>Losses: {card.data.losses}</Stat>
+                  </>
+                )}
+              </CardContainer>
+            ))
+          ) : (
+            <Label>No performance data available.</Label>
+          )}
+        </Section>
+      </PageContainer>
+      <Footer />
+    </>
   );
 }

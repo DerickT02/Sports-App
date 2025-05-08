@@ -87,17 +87,6 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const TextArea = styled.textarea`
-  padding: 0.8rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  background: #f9f9f9;
-  width: 100%;
-  resize: vertical;
-  min-height: 120px;
-`;
-
 const SubmitButton = styled.button`
   align-self: flex-start;
   background-color: var(--color-primary);
@@ -113,6 +102,7 @@ const SubmitButton = styled.button`
     background-color: #b55d2a;
   }
 `;
+
 
 /* ---------- Main Component ---------- */
 const Contact: React.FC = () => {
@@ -169,18 +159,18 @@ const Contact: React.FC = () => {
             id="email"
             value={email}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setFullName(e.target.value);
+              setEmail(e.target.value);
             }}
             
             required
           />
 
           <Label htmlFor="message">Message</Label>
-          <TextArea
+          <Input
             id="message"
             value={message}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setFullName(e.target.value);
+              setMessage(e.target.value);
             }}
             
             required

@@ -30,6 +30,7 @@ const navItems = [
   { label: 'Contact Us', route: '/contact-us' },
   { label: 'Privacy Policy', route: './privacy-policy' },
   { label: 'Admin', route: '/admin-home', style: { color: 'red' } },
+
 ]
 
 const NavBar: React.FC = () => {
@@ -43,11 +44,11 @@ const NavBar: React.FC = () => {
   return (
   <HeaderContainer>
        <HeaderContent>
-       <LogoSection>
-  <LogoImage src={Logo} alt="Logo" />
-  <Divider />
-  <LogoText>Players Club Management</LogoText>
-</LogoSection>
+       <LogoSection onClick={() => { navigate('/'); setMenuOpen(false) }}>
+        <LogoImage src={Logo} alt="Logo" />
+        <Divider />
+        <LogoText>Players Club Management</LogoText>
+      </LogoSection>
           
           {/* Desktop Links */}
           <NavLinks>

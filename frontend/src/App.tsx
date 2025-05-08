@@ -15,6 +15,7 @@ import ContactUs from './pages/contact'
 import Services from './pages/services'
 import SignIn from './pages/signin'
 import Resources from './pages/resources'
+import PrivacyPolicy from './pages/privacypolicy'
 import AdminHome from "./pages/admin"
 import ManageAthlete from "./pages/admin/ManageAthlete"
 import AthletePortfolio from './pages/athletes/Portfolio'
@@ -57,6 +58,7 @@ function App() {
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/services" element={<Services />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/admin-home" element={<AdminHome />} />
             <Route path="/admin-Manage_Athlete" element={<ManageAthlete />} />

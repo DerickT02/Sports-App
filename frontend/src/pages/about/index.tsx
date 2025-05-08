@@ -98,3 +98,137 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
+
+
+const Wrapper = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: var(--color-text);
+  font-family: 'Lato', sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--color-heading);
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+const TeamSection = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const Card = styled.div`
+  flex: 1;
+  min-width: 280px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  padding-top: 30px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const Photo = styled.div`
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1rem auto;
+  background-color: #ccc;
+  border-radius: 50%;
+`;
+
+const Name = styled.h3`
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+`;
+
+const Role = styled.p`
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const Bio = styled.p`
+  font-size: 1rem;
+  line-height: 1.4;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const FAQHeading = styled.h2`
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--color-heading);
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const FAQSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const FAQCard = styled.div`
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+`;
+
+const Question = styled.h3`
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const Answer = styled.p`
+  font-size: 1rem;
+  line-height: 1.6;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+`;
+

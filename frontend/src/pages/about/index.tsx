@@ -1,6 +1,7 @@
 import React from 'react';
 import './About.css';
 import Footer from '../../components/Footer';
+import styled from 'styled-components';
 
 interface TeamMember {
   name: string;

@@ -21,8 +21,8 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Quick Links</h4>
           <a href="#">About Us</a>
-          <a href="#">Services</a>
-          <a href="#">Privacy Policy</a>
+          <a href="terms-of-service">Services</a>
+          <a href="privacy-policy">Privacy Policy</a>
         </div>
       </div>
       <div className="footer-bottom">

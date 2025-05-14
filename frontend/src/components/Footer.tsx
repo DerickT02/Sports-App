@@ -1,5 +1,13 @@
 import React from 'react';
 import '../pages/homepage/HomePage.css';
+import styled from 'styled-components';
+
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  /* justify-content: flex-start; */
+`;
 
 const Footer = () => {
   return (
@@ -20,8 +28,8 @@ const Footer = () => {
         </div>
         <div className="footer-section">
           <h4>Quick Links</h4>
-          <a href="#">About Us</a>
-          <a href="terms-of-service">Services</a>
+          <a href="about-us">About Us</a>
+          <a href="terms-of-service">Terms of Service</a>
           <a href="privacy-policy">Privacy Policy</a>
         </div>
       </div>

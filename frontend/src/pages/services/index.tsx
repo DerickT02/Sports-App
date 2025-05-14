@@ -17,7 +17,7 @@ const Title = styled.h1`
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  padding-top: 60px;
+  margin-top: 1rem;
   color: var(--color-heading);
 `;
 

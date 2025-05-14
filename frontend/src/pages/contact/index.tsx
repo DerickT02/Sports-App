@@ -20,6 +20,7 @@ const Title = styled.h1`
 const Intro = styled.div`
   text-align: center;
   margin-bottom: 2rem;
+  margin-top: 2rem;
 `;
 
 const Subtitle = styled.p`

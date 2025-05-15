@@ -3,13 +3,12 @@ import { useTheme } from '../../context/ThemeContext'; // Adjust path if needed
 
 interface CardProps {
   image: string;
-  title: string;
   active: boolean;
   index: number;
   activeIndex: number;
 }
 
-const Card: React.FC<CardProps> = ({ image, title, active = false, index, activeIndex }) => {
+const Card: React.FC<CardProps> = ({ image, active = false, index, activeIndex }) => {
   const { isDark } = useTheme();
   const offsetIndex = Math.abs(index - activeIndex);
   const offset = active ? 0 : offsetIndex * 30;
@@ -39,7 +38,6 @@ const Card: React.FC<CardProps> = ({ image, title, active = false, index, active
       >
         <img
           src={image}
-          alt={title}
           style={{
             width: 260,
             height: 260,
@@ -61,7 +59,6 @@ const Card: React.FC<CardProps> = ({ image, title, active = false, index, active
               : '0px 3px 8px rgba(255, 255, 255, 0.2)',
           }}
         >
-          {title}
         </div>
       </div>
     </div>

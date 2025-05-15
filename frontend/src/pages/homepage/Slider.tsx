@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import './Slider.css';
+import image1 from '../../assets/bRoll/pictureA.png'
+import image2 from '../../assets/bRoll/pictureB.png'
+import image3 from '../../assets/bRoll/pictureC.png'
+import image4 from '../../assets/bRoll/pictureD.png'
+import image5 from '../../assets/bRoll/pictureE.png'
+import image6 from '../../assets/bRoll/pictureF.png'
+import image7 from '../../assets/bRoll/pictureG.png'
+import image8 from '../../assets/bRoll/pictureH.png'
 
-const titles = [
-  'Coral Reef', 'Ripples', 'Tidewave', 'Mountaineer', 'Driftline',
-  'Deep Blue', 'Breaker', 'Cascade', 'Moonrise', 'Zenith',
-  'Lagoon', 'Foamline', 'Wavecrest', 'Seabright', 'Saltbay',
-  'Sunburst', 'Seacliff', 'Tsunami', 'Pelagic', 'Glacier'
+
+const cards = [
+  image1, image2, image3, image4, image5, image6, image7, image8
 ];
 
 const CARD_WIDTH = 260;
@@ -18,7 +24,7 @@ const Slider: React.FC = () => {
   // Auto-advance
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex(prev => (prev + 1) % titles.length);
+      setActiveIndex(prev => (prev + 1) % cards.length);
     }, 2000);
 
     return () => clearInterval(interval);
@@ -32,11 +38,11 @@ const Slider: React.FC = () => {
           transform: `translateX(-${(CARD_WIDTH + GAP) * activeIndex}px)`,
         }}
       >
-        {titles.map((title, i) => (
+        {cards.map((card, i) => (
           <Card
             key={i}
-            image={`https://placehold.co/260x260?text=${encodeURIComponent(title)}`}
-            title={title}
+            image={`${card}`}
+            
             active={i === activeIndex}
             index={i}
             activeIndex={activeIndex}

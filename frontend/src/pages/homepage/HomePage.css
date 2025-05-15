@@ -182,17 +182,33 @@ html, body {
 
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#root /* or your top-level wrapper */ {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main /* whatever wraps your page’s content */ {
+  flex: 1;           /* take up all available space */
+}
+
+/* your footer can now stay static in flow */
 .homepage-footer {
-  background-color: #000000;
+  background-color: var(--color-text);
+  color: var(--color-surface);
   padding: 3rem 2rem 1rem;
-  margin-top: 4rem;
   border-top: 1px solid var(--color-border);
-  width: 100vw;
+  /* remove the hacky full-width offsets */
   position: relative;
+  width: 100vw;
   left: 50%;
-  right: 50%;
   margin-left: -50vw;
-  margin-right: -50vw;
+  /* no margin-top needed because main is pushing it down */
 }
 
 .footer-content {
@@ -211,14 +227,14 @@ html, body {
 }
 
 .footer-section h4 {
-  color: #ffffff;
+  color: var(--color-surface);
   font-size: 1.2rem;
   margin-bottom: 1rem;
   font-family: 'Lato', sans-serif;
 }
 
 .footer-section p {
-  color: #ffffff;
+  color: var(--color-surface);
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
 }
@@ -231,7 +247,7 @@ html, body {
 }
 
 .social-links a {
-  color: #ffffff;
+  color: var(--color-surface);
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.3s ease;
@@ -244,7 +260,7 @@ html, body {
 
 .footer-section a {
   display: block;
-  color: #ffffff;
+  color: var(--color-surface);
   text-decoration: none;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
@@ -263,7 +279,9 @@ html, body {
 }
 
 .footer-bottom p {
-  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  color: var(--color-surface);
   font-size: 0.8rem;
 }
 

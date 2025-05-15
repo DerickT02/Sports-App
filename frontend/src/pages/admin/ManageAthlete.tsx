@@ -1,11 +1,6 @@
-// ManageAthlete.tsx
 import React, { useState, useEffect } from 'react';
 import { Athlete } from '../../../../shared/types/athlete';
-import {
-  DataCard,
-  DataCardType,
-  FootballSeasonStatsData,
-} from '../../../../shared/types/dataCard';
+import { DataCard, DataCardType, FootballSeasonStatsData } from '../../../../shared/types/dataCard';
 
 import {
   PageContainer,
@@ -21,343 +16,137 @@ import {
   ControlRow,
   SaveButton,
   ClearButton,
-  DeleteButton,          // <- add in your *.styles.ts next to Save / Clear
+  DeleteButton,
   ActionContainer,
   ActiveCardsWrapper,
 } from './manageathlete.styles';
 
 import { Box, Vertical } from '../../components/layout/atoms';
-import {
-  getAthletes,
-  addAthlete,
-  updateAthlete,
-  deleteAthlete,
-} from '../../api/athletes';
+import { getAthletes, addAthlete, updateAthlete, deleteAthlete } from '../../api/athletes';
 
-/* ---------- helpers / local types ---------- */
-interface DataCardOption {
-  id: number;
-  title: string;
-  type: DataCardType;
-}
-
-/* instead of an empty interface extend, just alias  */
+/* ------------------------------------------------------------------ */
+interface DataCardOption { id: number; title: string; type: DataCardType; }
 type ActiveCard = DataCard;
 
-const availableCardOptions: DataCardOption[] = [
-  { id: 1, title: 'Football Stats Card (Style A)', type: 'footballStats' },
-  { id: 2, title: 'Football Stats Card (Style B)', type: 'footballStats' },
+const OPTIONS: DataCardOption[] = [
+  { id: 1, title: 'Football Stats Card (A)', type: 'footballStats' },
+  { id: 2, title: 'Football Stats Card (B)', type: 'footballStats' },
 ];
 
-/* ---------- component ---------- */
 const ManageAthlete: React.FC = () => {
-  /* server data --------------------------------------------------------- */
+  /* ---------- server data ---------- */
   const [athletes, setAthletes] = useState<Athlete[]>([]);
+  useEffect(() => { getAthletes().then(r => setAthletes(r.data)); }, []);
 
-  useEffect(() => {
-    getAthletes()
-      .then((r) => setAthletes(r.data))
-      .catch(console.error);
-  }, []);
-
-  /* form state ---------------------------------------------------------- */
+  /* ---------- form state ---------- */
   const [mode, setMode] = useState<'add' | 'edit'>('add');
-  const [selectedAthleteId, setSelectedAthleteId] = useState('');
-  const [baseData, setBaseData] = useState({
-    firstName: '',
-    lastName: '',
-    year: 'Freshman' as Athlete['year'],
-    sports: '',
-    portraitPhoto: '',
-    biography: '',
+  const [selectedId, setSelectedId] = useState('');
+  const [base, setBase] = useState({
+    firstName: '', lastName: '', year: 'Freshman' as Athlete['year'],
+    sports: '', portraitPhoto: '', biography: '',
   });
-  const [activeCards, setActiveCards] = useState<ActiveCard[]>([]);
+  const [cards, setCards] = useState<ActiveCard[]>([]);
 
-  /* utility ------------------------------------------------------------- */
-  const generateInstanceId = (o: DataCardOption) =>
-    `${o.id}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+  /* ---------- helpers ---------- */
+  const reset = () => {
+    setBase({ firstName: '', lastName: '', year: 'Freshman', sports: '', portraitPhoto: '', biography: '' });
+    setCards([]); setSelectedId('');
+  };
+  const instanceId = (o: DataCardOption) => `${o.id}-${Date.now()}-${Math.random().toString(36).slice(2,9)}`;
 
-  /* card handlers ------------------------------------------------------- */
-  const handleAddCard = (o: DataCardOption) => {
-    const instanceId = generateInstanceId(o);
-    setActiveCards((prev) => [
-      ...prev,
-      {
-        instanceId,
-        type: o.type,
-        title: o.title,
-        data: { teamName: '', season: 0, wins: 0, losses: 0 },
-      },
-    ]);
+  /* ---------- card ops ---------- */
+  const addCard = (o: DataCardOption) =>
+    setCards(c => [...c, { instanceId: instanceId(o), type: o.type, title: o.title,
+      data: { teamName: '', season: 0, wins: 0, losses: 0 } }]);
+
+  const swap = (i: number, j: number) =>
+    setCards(c => { const arr = [...c]; [arr[i], arr[j]] = [arr[j], arr[i]]; return arr; });
+
+  const removeCard = (id: string) => setCards(c => c.filter(k => k.instanceId !== id));
+
+  /* ---------- athlete selection ---------- */
+  const loadAthlete = (a: Athlete) => {
+    setBase({ firstName: a.firstName, lastName: a.lastName, year: a.year,
+      sports: a.sports, portraitPhoto: a.portraitPhoto, biography: a.biography ?? '' });
+    setCards((a.portfolioData ?? []) as ActiveCard[]);
   };
 
-  const moveUp = (idx: number) =>
-    idx > 0 &&
-    setActiveCards((l) => {
-      const copy = [...l];
-      [copy[idx - 1], copy[idx]] = [copy[idx], copy[idx - 1]];
-      return copy;
-    });
-
-  const moveDown = (idx: number) =>
-    idx < activeCards.length - 1 &&
-    setActiveCards((l) => {
-      const copy = [...l];
-      [copy[idx], copy[idx + 1]] = [copy[idx + 1], copy[idx]];
-      return copy;
-    });
-
-  const deleteCard = (id: string) =>
-    setActiveCards((prev) => prev.filter((c) => c.instanceId !== id));
-
-  /* mode / athlete switching ------------------------------------------- */
-  const resetForm = () => {
-    setBaseData({
-      firstName: '',
-      lastName: '',
-      year: 'Freshman',
-      sports: '',
-      portraitPhoto: '',
-      biography: '',
-    });
-    setActiveCards([]);
-    setSelectedAthleteId('');
+  /* ---------- save / delete ---------- */
+  const save = async () => {
+    const payload: Partial<Athlete> = { ...base, portfolioData: cards };
+    mode === 'add' ? await addAthlete(payload) :
+    selectedId && await updateAthlete(selectedId, payload);
+    getAthletes().then(r => setAthletes(r.data));
+    if (mode === 'add') reset();
   };
 
-  const toggleMode = (m: 'add' | 'edit') => {
-    if (m !== mode && window.confirm('Switching modes will clear current data. Proceed?')) {
-      setMode(m);
-      resetForm();
-    }
+  const removeAthlete = async () => {
+    if (!selectedId) return;
+    if (!window.confirm('Delete this athlete permanently?')) return;
+    await deleteAthlete(selectedId);
+    getAthletes().then(r => setAthletes(r.data));
+    reset();
   };
 
-  const loadAthleteData = (a: Athlete) => {
-    setBaseData({
-      firstName: a.firstName,
-      lastName: a.lastName,
-      year: a.year,
-      sports: a.sports,
-      portraitPhoto: a.portraitPhoto,
-      biography: a.biography ?? '',
-    });
-    setActiveCards((a.portfolioData ?? []) as ActiveCard[]);
-  };
-
-  const handleAthleteSelect = (id: string) => {
-    setSelectedAthleteId(id);
-    const found = athletes.find((a) => a._id === id);
-    if (found) loadAthleteData(found);
-  };
-
-  /* save / delete ------------------------------------------------------- */
-  const handleSave = async () => {
-    const payload: Partial<Athlete> = {
-      ...baseData,
-      portfolioData: activeCards,
-    };
-
-    if (mode === 'add') {
-      await addAthlete(payload);
-    } else if (selectedAthleteId) {
-      await updateAthlete(selectedAthleteId, payload);
-    }
-
-    /* refresh list */
-    const { data } = await getAthletes();
-    setAthletes(data);
-    if (mode === 'add') resetForm();
-  };
-
-  const handleDelete = async () => {
-    if (!selectedAthleteId) return;
-    const ok = window.confirm('Delete this athlete permanently?');
-    if (!ok) return;
-    await deleteAthlete(selectedAthleteId);
-
-    const { data } = await getAthletes();
-    setAthletes(data);
-    resetForm();
-  };
-
-  /* clear --------------------------------------------------------------- */
-  const handleClear = () => {
-    if (window.confirm('Clear all data?')) resetForm();
-  };
-
-  /* -------------------------------------------------------------------- */
+  /* ---------- UI ---------- */
   return (
     <PageContainer>
-      {/* mode toggle ---------------------------------------------------- */}
+      {/* toggle */}
       <ToggleContainer>
-        <ToggleButton
-          onClick={() => toggleMode('add')}
-          className={mode === 'add' ? 'active' : ''}
-        >
-          Add New
-        </ToggleButton>
-        <ToggleButton
-          onClick={() => toggleMode('edit')}
-          className={mode === 'edit' ? 'active' : ''}
-        >
-          Edit Existing
-        </ToggleButton>
+        <ToggleButton onClick={() => { if (mode!=='add') { reset(); setMode('add'); } }} className={mode === 'add' ? 'active' : ''}>Add New</ToggleButton>
+        <ToggleButton onClick={() => { if (mode!=='edit') { reset(); setMode('edit'); } }} className={mode === 'edit' ? 'active' : ''}>Edit Existing</ToggleButton>
 
         {mode === 'edit' && (
-          <StyledSelect
-            value={selectedAthleteId}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              handleAthleteSelect(e.target.value)
-            }
-          >
-            <option value="">Select an athlete</option>
-            {athletes.map((a) => (
-              <option key={a._id} value={a._id}>
-                {a.firstName} {a.lastName}
-              </option>
-            ))}
+          <StyledSelect value={selectedId} onChange={e => { setSelectedId(e.target.value); const a = athletes.find(x => x._id === e.target.value); if (a) loadAthlete(a); }}>
+            <option value="">Select athlete</option>
+            {athletes.map(a => <option key={a._id} value={a._id}>{a.firstName} {a.lastName}</option>)}
           </StyledSelect>
         )}
       </ToggleContainer>
 
-      {/* base info ------------------------------------------------------ */}
+      {/* base info */}
       <Section>
         <h2>Base Athlete Information</h2>
-        <StyledInput
-          placeholder="First Name"
-          value={baseData.firstName}
-          onChange={(e) => setBaseData({ ...baseData, firstName: e.target.value })}
-        />
-        <StyledInput
-          placeholder="Last Name"
-          value={baseData.lastName}
-          onChange={(e) => setBaseData({ ...baseData, lastName: e.target.value })}
-        />
-        <StyledSelect
-          value={baseData.year}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setBaseData({ ...baseData, year: e.target.value as Athlete['year'] })
-          }
-        >
-          <option value="Freshman">Freshman</option>
-          <option value="Sophomore">Sophomore</option>
-          <option value="Junior">Junior</option>
-          <option value="Senior">Senior</option>
+        <StyledInput placeholder="First name" value={base.firstName}  onChange={e => setBase({ ...base, firstName: e.target.value })} />
+        <StyledInput placeholder="Last name"  value={base.lastName}   onChange={e => setBase({ ...base, lastName:  e.target.value })} />
+        <StyledSelect value={base.year} onChange={e => setBase({ ...base, year: e.target.value as Athlete['year'] })}>
+          {['Freshman','Sophomore','Junior','Senior'].map(y => <option key={y} value={y}>{y}</option>)}
         </StyledSelect>
-        <StyledInput
-          placeholder="Sports"
-          value={baseData.sports}
-          onChange={(e) => setBaseData({ ...baseData, sports: e.target.value })}
-        />
-        <StyledInput
-          placeholder="Portrait Photo URL"
-          value={baseData.portraitPhoto}
-          onChange={(e) => setBaseData({ ...baseData, portraitPhoto: e.target.value })}
-        />
-        <StyledTextarea
-          placeholder="Biography"
-          value={baseData.biography}
-          onChange={(e) => setBaseData({ ...baseData, biography: e.target.value })}
-        />
+        <StyledInput placeholder="Sports" value={base.sports} onChange={e => setBase({ ...base, sports: e.target.value })} />
+        <StyledInput placeholder="Portrait URL" value={base.portraitPhoto} onChange={e => setBase({ ...base, portraitPhoto: e.target.value })} />
+        <StyledTextarea placeholder="Biography" value={base.biography} onChange={e => setBase({ ...base, biography: e.target.value })} />
       </Section>
 
-      {/* available cards ------------------------------------------------ */}
+      {/* options */}
       <Section>
         <h2>Available Data Cards</h2>
-        <ListContainer>
-          {availableCardOptions.map((o) => (
-            <AvailableItem key={o.id} onClick={() => handleAddCard(o)}>
-              {o.title}
-            </AvailableItem>
-          ))}
-        </ListContainer>
+        <ListContainer>{OPTIONS.map(o => <AvailableItem key={o.id} onClick={() => addCard(o)}>{o.title}</AvailableItem>)}</ListContainer>
       </Section>
 
-      {/* active cards --------------------------------------------------- */}
+      {/* active cards */}
       <Section>
         <h2>Active Data Cards</h2>
         <ActiveCardsWrapper>
-          {activeCards.map((card, idx) => (
+          {cards.map((card, i) => (
             <ActiveCardContainer key={card.instanceId}>
-              <Box>{card.title}</Box>
+              <Box fontWeight={700}>{card.title}</Box>
               <ControlRow>
-                <button onClick={() => moveUp(idx)} disabled={idx === 0}>
-                  ↑
-                </button>
-                <button
-                  onClick={() => moveDown(idx)}
-                  disabled={idx === activeCards.length - 1}
-                >
-                  ↓
-                </button>
-                <button onClick={() => deleteCard(card.instanceId)}>X</button>
+                <button disabled={i===0} onClick={() => swap(i, i-1)}>↑</button>
+                <button disabled={i===cards.length-1} onClick={() => swap(i, i+1)}>↓</button>
+                <button onClick={() => removeCard(card.instanceId)}>✕</button>
               </ControlRow>
-
-              {/* only one card type for now -------------------------------- */}
-              {card.type === 'footballStats' && (
+              {/* football card editor */}
+              {card.type==='footballStats' && (
                 <Vertical gap="0.5rem">
-                  <StyledInput
-                    placeholder="Team Name"
-                    value={(card.data as FootballSeasonStatsData).teamName}
-                    onChange={(e) => {
-                      const updated = {
-                        ...(card.data as FootballSeasonStatsData),
-                        teamName: e.target.value,
-                      };
-                      setActiveCards((p) =>
-                        p.map((c) =>
-                          c.instanceId === card.instanceId ? { ...c, data: updated } : c
-                        )
-                      );
-                    }}
-                  />
-                  <StyledInput
-                    type="number"
-                    placeholder="Season (e.g. 2023)"
-                    value={(card.data as FootballSeasonStatsData).season || ''}
-                    onChange={(e) => {
-                      const updated = {
-                        ...(card.data as FootballSeasonStatsData),
-                        season: Number(e.target.value),
-                      };
-                      setActiveCards((p) =>
-                        p.map((c) =>
-                          c.instanceId === card.instanceId ? { ...c, data: updated } : c
-                        )
-                      );
-                    }}
-                  />
-                  <StyledInput
-                    type="number"
-                    placeholder="Wins"
-                    value={(card.data as FootballSeasonStatsData).wins || ''}
-                    onChange={(e) => {
-                      const updated = {
-                        ...(card.data as FootballSeasonStatsData),
-                        wins: Number(e.target.value),
-                      };
-                      setActiveCards((p) =>
-                        p.map((c) =>
-                          c.instanceId === card.instanceId ? { ...c, data: updated } : c
-                        )
-                      );
-                    }}
-                  />
-                  <StyledInput
-                    type="number"
-                    placeholder="Losses"
-                    value={(card.data as FootballSeasonStatsData).losses || ''}
-                    onChange={(e) => {
-                      const updated = {
-                        ...(card.data as FootballSeasonStatsData),
-                        losses: Number(e.target.value),
-                      };
-                      setActiveCards((p) =>
-                        p.map((c) =>
-                          c.instanceId === card.instanceId ? { ...c, data: updated } : c
-                        )
-                      );
-                    }}
-                  />
+                  {(['teamName','season','wins','losses'] as const).map(field => (
+                    <StyledInput key={field} type={field==='teamName' ? 'text':'number'}
+                      placeholder={field.charAt(0).toUpperCase()+field.slice(1)}
+                      value={(card.data as any)[field] ?? ''}
+                      onChange={e => {
+                        const v = field==='teamName' ? e.target.value : Number(e.target.value);
+                        setCards(list => list.map(c => c.instanceId===card.instanceId ? { ...c, data:{ ...(c.data as any), [field]:v } }:c));
+                      }} />
+                  ))}
                 </Vertical>
               )}
             </ActiveCardContainer>
@@ -365,14 +154,12 @@ const ManageAthlete: React.FC = () => {
         </ActiveCardsWrapper>
       </Section>
 
-      {/* actions -------------------------------------------------------- */}
+      {/* actions */}
       <Section>
         <ActionContainer>
-          <ClearButton onClick={handleClear}>Clear</ClearButton>
-          {mode === 'edit' && selectedAthleteId && (
-            <DeleteButton onClick={handleDelete}>Delete Athlete</DeleteButton>
-          )}
-          <SaveButton onClick={handleSave}>Save Athlete</SaveButton>
+          <ClearButton onClick={reset}>Clear</ClearButton>
+          {mode==='edit' && selectedId && <DeleteButton onClick={removeAthlete}>Delete Athlete</DeleteButton>}
+          <SaveButton onClick={save}>Save Athlete</SaveButton>
         </ActionContainer>
       </Section>
     </PageContainer>

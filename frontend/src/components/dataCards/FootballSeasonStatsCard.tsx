@@ -1,33 +1,34 @@
-// src/components/cards/FootballSeasonStatsCard.tsx
 import React from 'react';
-import styled from 'styled-components';
-import { Box } from '../layout/atoms';
+import { SeasonCardShell } from './SeasonCardShell';
 import { FootballSeasonStatsData } from '../../../../shared/types/dataCard';
 
-// Define the props that the FootballSeasonStatsCard component expects.
-export interface StatsCardProps {
+export interface FootballCardProps {
   data: FootballSeasonStatsData;
 }
 
-const CardContainer = styled(Box)`
-  background: rgba(0, 0, 0, 0.2);
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 1rem 0;
-`;
+const FootballSeasonStatsCard: React.FC<FootballCardProps> = ({ data }) => (
+  <SeasonCardShell>
+    <h3>{data.teamName} – {data.season}</h3>
 
-const FootballSeasonStatsCard: React.FC<StatsCardProps> = ({ data }) => {
-  return (
-    <CardContainer>
-      <h3>
-        {data.teamName} - {data.season}
-      </h3>
-      <p>
-        Wins: {data.wins} | Losses: {data.losses}
-      </p>
-      {/* Additional displays or inputs can be added here */}
-    </CardContainer>
-  );
-};
+    <table>
+      <thead>
+        <tr>
+          <th>W</th><th>L</th><th>CMP</th><th>ATT</th><th>YDS</th>
+          <th>TD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{data.wins}</td>
+          <td>{data.losses}</td>
+          <td>{data.cmp}</td>
+          <td>{data.att}</td>
+          <td>{data.yds}</td>
+          <td>{data.td}</td>
+        </tr>
+      </tbody>
+    </table>
+  </SeasonCardShell>
+);
 
 export default FootballSeasonStatsCard;

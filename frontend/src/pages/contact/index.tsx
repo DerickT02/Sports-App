@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Footer from '../../components/Footer';
 
 /* ---------- Styled Components ---------- */
 const Page = styled.div`
@@ -120,6 +121,7 @@ const Contact: React.FC = () => {
   };
 
   return (
+    <>
     <Page>
       <Title>Contact Us</Title>
 
@@ -181,6 +183,8 @@ const Contact: React.FC = () => {
         </InquiryForm>
       </FormSection>
     </Page>
+    <Footer/>
+    </>
   );
 };
 

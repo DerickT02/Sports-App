@@ -15,6 +15,7 @@ const PageContainer = styled.div`
   font-family: 'Lato', sans-serif;
 `;
 
+
 const Header = styled.div`
   display: flex;
   gap: 2rem;

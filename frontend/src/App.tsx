@@ -5,10 +5,10 @@ import styled from 'styled-components'
 //Domestic imports
 import './App.css'
 import NavBar from './components/layout/NavBar'
-import { FullPageBackground, FullPageCenter } from './components/layout/atoms'
+import { FullPageBackground } from './components/layout/atoms'
 
 // Pages
-import HomePage from './pages/homepage'
+import HomePage from './pages/homepage/Index'
 import AboutUs from './pages/about'
 import ShowCase from './pages/athletes/ShowCase'
 import ContactUs from './pages/contact'
@@ -17,7 +17,7 @@ import SignIn from './pages/signin'
 import Resources from './pages/resources'
 import TermsOfService from './pages/termsofservice'
 import PrivacyPolicy from './pages/privacypolicy'
-import AdminHome from "./pages/admin"
+import AdminHome from "./pages/admin/Index"
 import ManageAthlete from "./pages/admin/ManageAthlete"
 import AthletePortfolio from './pages/athletes/Portfolio'
 

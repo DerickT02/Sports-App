@@ -28,7 +28,7 @@ const Intro = styled.p`
 `;
 
 const Item = styled.div`
-  background: rgba(0, 0, 0, 0.2);
+  background:rgba(255, 255, 255, 0.2);
   margin-bottom: 2rem;
   padding: 1.5rem;
   border-radius: 8px;
@@ -52,6 +52,16 @@ const Subheading = styled.h3`
 const ItemText = styled.p`
   font-size: 1rem;
   line-height: 1.6;
+  
+    /* everything inside ItemText a will get these styles */
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
 `;
 
 const CTA = styled.div`

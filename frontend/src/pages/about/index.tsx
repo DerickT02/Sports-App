@@ -1,6 +1,5 @@
 import React from 'react';
 import './About.css';
-import Footer from '../../components/Footer';
 import styled from 'styled-components';
 
 interface TeamMember {
@@ -68,35 +67,34 @@ const faqs: FAQ[] = [
   },
 ];
 
-const AboutUs = () => {
-  return (
-    <div className="about-wrapper">
-      <div className="about-content">
-        <h1>About Us</h1>
-        <div className="team-section">
-          {teamMembers.map((member, index) => (
-            <div className="card" key={index}>
-              <div className="photo" />
-              <h3 className="name">{member.name}</h3>
-              <p className="role">{member.title}</p>
-              <p className="bio">{member.description}</p>
-            </div>
-          ))}
-        </div>
-        <h2 className="faq-heading">Frequently Asked Questions (FAQ)</h2>
-        <div className="faq-section">
-          {faqs.map((faq, index) => (
-            <div className="faq-card" key={index}>
-              <h3 className="question">{faq.question}</h3>
-              <p className="answer">{faq.answer}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
-};
+const AboutUs: React.FC = () => (
+  <Wrapper>
+    <Title>About&nbsp;Us</Title>
+
+    {/* ─────────── Team ─────────── */}
+    <TeamSection>
+      {teamMembers.map((m) => (
+        <Card key={m.name}>
+          <Photo /> {/* replace with real image when available */}
+          <Name>{m.name}</Name>
+          <Role>{m.title}</Role>
+          <Bio>{m.description}</Bio>
+        </Card>
+      ))}
+    </TeamSection>
+
+    {/* ─────────── FAQ ─────────── */}
+    <FAQHeading>Frequently Asked Questions&nbsp;(FAQ)</FAQHeading>
+    <FAQSection>
+      {faqs.map((f) => (
+        <FAQCard key={f.question}>
+          <Question>{f.question}</Question>
+          <Answer>{f.answer}</Answer>
+        </FAQCard>
+      ))}
+    </FAQSection>
+  </Wrapper>
+);
 
 export default AboutUs;
 
@@ -108,6 +106,7 @@ const Wrapper = styled.div`
   padding: 2rem;
   color: var(--color-text);
   font-family: 'Lato', sans-serif;
+  min-height: 100vh;
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -145,6 +144,7 @@ const Card = styled.div`
   border-radius: 8px;
   padding: 1rem;
   padding-top: 30px;
+  margin-top: 2rem;      /* ← matches old .card rule */
   text-align: center;
 
   @media (max-width: 768px) {
@@ -232,4 +232,3 @@ const Answer = styled.p`
     font-size: 0.9rem;
   }
 `;
-

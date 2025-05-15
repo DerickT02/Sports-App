@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import './App.css'
 import NavBar from './components/layout/NavBar'
 import { FullPageBackground } from './components/layout/atoms'
+import Footer from './components/layout/Footer'
 
 // Pages
 import HomePage from './pages/homepage/Index'
@@ -21,13 +22,12 @@ import AdminHome from "./pages/admin/Index"
 import ManageAthlete from "./pages/admin/ManageAthlete"
 import AthletePortfolio from './pages/athletes/Portfolio'
 
+
 const AppContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  position: relative;
-  margin: 0;
-  padding: 0;
+  overflow-x: hidden;   /* prevents stray horizontal scroll bars */
 `;
 
 const MainContent = styled.main`
@@ -66,6 +66,7 @@ function App() {
             <Route path="/admin-Manage_Athlete" element={<ManageAthlete />} />
           </Routes>
         </MainContent>
+        <Footer/>
       </Router>
     </AppContainer>
   )

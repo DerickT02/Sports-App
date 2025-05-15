@@ -27,7 +27,7 @@ export const ToggleButton = styled(Box)`
 
   &.active {
     background: var(--color-primary);
-    color: var(--color-bg);
+    
   }
 `;
 
@@ -134,6 +134,10 @@ export const ControlButton = styled(Box)`
 `;
 
 export const SaveButton = styled(ControlButton)`
+  background: #4caf50;
+`;
+
+export const DeleteButton = styled(ControlButton)`
   background: #4caf50;
 `;
 

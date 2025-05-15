@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { dummyAthletes } from '../admin/dummyAthletes';
 import { DataCard } from '../../../../shared/types/dataCard';
-import Footer from '../../components/Footer';
 
 /* ---------- Styled Components ---------- */
 const PageContainer = styled.div`
@@ -109,7 +108,6 @@ export default function AthletePortfolio() {
           )}
         </Section>
       </PageContainer>
-      <Footer />
     </>
   );
 }

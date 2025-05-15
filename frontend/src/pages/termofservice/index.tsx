@@ -248,8 +248,9 @@ function TermsOfService() {
 
     
 
-      <Footer />
+    
     </Page>
+    <Footer />
     
     </>
     

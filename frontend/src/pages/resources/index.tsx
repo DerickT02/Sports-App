@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Footer from '../../components/Footer';
+
 
 /* ---------- Styled Components ---------- */
 const Page = styled.div`
@@ -102,7 +102,6 @@ const Resources: React.FC = () => {
           </Section>
         </Content>
       </Page>
-      <Footer />
     </>
   );
 };

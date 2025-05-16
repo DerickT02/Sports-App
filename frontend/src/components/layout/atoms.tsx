@@ -110,3 +110,33 @@ export const FullPageBackground = styled.div<PositionProps>`
   z-index: -5;
   ${position};
 `;
+
+interface Props extends LayoutProps, SpaceProps, ColorProps, TypographyProps {}
+
+export const Table = styled.table<Props>`
+  width: 100%;
+  border-collapse: collapse;
+  ${space};
+  ${color};
+  ${typography};
+
+  th, td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid var(--color-border);
+  }
+
+  th {
+    background-color: var(--color-surface);
+    color: var(--color-heading);
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--color-bg);
+  }
+
+  tr:hover {
+    background-color: var(--color-muted);
+  }
+`;

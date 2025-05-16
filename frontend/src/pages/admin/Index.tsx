@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Horizontal, Vertical } from '../../components/layout/atoms';
 import { AiOutlineEdit } from 'react-icons/ai';
 import styled from 'styled-components';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 /* ---------- Styled Components ---------- */
 const PageContainer = styled(Vertical)`
@@ -80,9 +81,28 @@ const ActionIcon = styled(Box)`
   }
 `;
 
+
 /* ---------- Component ---------- */
 export default function AdminHome() {
   const navigate = useNavigate();
+
+  const auth = getAuth();
+
+  const logout = () => {
+    signOut(auth).then(() => {
+      navigate("/")
+    })
+  }
+  onAuthStateChanged(auth,(user) => {
+    if(user){
+      console.log("Logged in")
+    }
+    else{
+      navigate("/")
+    }
+  })
+
+
 
   return (
     <PageContainer>
@@ -93,6 +113,7 @@ export default function AdminHome() {
           <AiOutlineEdit />
         </ActionIcon>
       </ActionCard>
+      <button onClick={logout}> Log out </button>
     </PageContainer>
   );
 }

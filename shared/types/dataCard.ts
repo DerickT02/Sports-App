@@ -1,22 +1,79 @@
-// shared/types/dataCard.ts
+/* NEW –– a discriminated-union of every season-level stats card  */
 
-// Define all possible component data types here. For now, we have one type.
-export type DataCardType = 'footballStats';
+export type DataCardType =
+  | 'footballSeason'
+  | 'baseballSeason'
+  | 'soccerSeason'
+  | 'basketballSeason'
+  | 'custom';          // leave this for anything free-form later
 
 export interface FootballSeasonStatsData {
   teamName: string;
-  season: number; // e.g. 2023
+  season: number;
   wins: number;
   losses: number;
-  instanceId?: string; // Unique instance ID is added later when used in active cards
+  cmp: number;
+  att: number;
+  yds: number;
+  td: number;
+  /* add more as required */
 }
 
-// Union type for the data that a card might hold.
-export type DataCardData = FootballSeasonStatsData; // Expand this union as additional card types are created.
-
-export interface DataCard {
-  instanceId: string;            // Unique identifier for each card instance
-  type: DataCardType;            // E.g., 'footballStats'
-  title: string;                 // Title for display purposes
-  data: DataCardData;            // The card's associated data, typed
+export interface BaseballSeasonStatsData {
+  teamName: string;
+  season: number;
+  games: number;
+  avg: number;      // batting average
+  hr: number;       // home-runs
+  rbi: number;      // runs batted in
 }
+
+export interface SoccerSeasonStatsData {
+  teamName: string;
+  season: number;
+  appearances: number;
+  goals: number;
+  assists: number;
+  cleanSheets?: number;   // for keepers
+}
+
+export interface BasketballSeasonStatsData {
+  teamName: string;       // The name of the basketball team
+  season: number;         // The season year (e.g., 2023)
+  games: number;          // Number of games played in the season
+  pointsPerGame: number;  // Average points per game
+  reboundsPerGame: number; // Average rebounds per game
+  assistsPerGame: number;  // Average assists per game
+}
+
+export type DataCard =
+  | {
+      type: 'footballSeason';
+      title: string;
+      instanceId: string;
+      data: FootballSeasonStatsData;
+    }
+  | {
+      type: 'baseballSeason';
+      title: string;
+      instanceId: string;
+      data: BaseballSeasonStatsData;
+    }
+  | {
+      type: 'soccerSeason';
+      title: string;
+      instanceId: string;
+      data: SoccerSeasonStatsData;
+    }
+  | {
+      type: 'basketballSeason';
+      title: string;
+      instanceId: string;
+      data: BasketballSeasonStatsData;
+    }
+  | {
+      type: 'custom';
+      title: string;
+      instanceId: string;
+      data: Record<string, unknown>;
+    };

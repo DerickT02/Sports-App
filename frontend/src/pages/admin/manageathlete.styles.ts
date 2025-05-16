@@ -1,154 +1,160 @@
-// styles.ts
 import styled from 'styled-components';
-import { Box, Horizontal, Vertical } from '../../components/layout/atoms';
 
-export const PageContainer = styled(Box)`
-  max-width: 1200px;
+/* ---------- layout shells ------------------------------------------ */
+export const PageContainer = styled.div`
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 140px 2rem 2rem 2rem;
-  font-family: 'Lato', sans-serif;
+  padding: 2rem 1rem;
   color: var(--color-text);
 `;
 
-export const ToggleContainer = styled(Horizontal)`
+export const Section = styled.section`
+  margin: 2rem 0;
+`;
+
+/* ---------- mode toggle ------------------------------------------- */
+export const ToggleContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 2rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
 `;
 
-export const ToggleButton = styled(Box)`
-  padding: 0.75rem 1.25rem;
+export const ToggleButton = styled.button`
   background: var(--color-surface);
-  color: var(--color-text);
-  border-radius: 10px;
-  border: 2px solid var(--color-border);
-  font-weight: 600;
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-weight: 600;
 
-  &.active {
-    background: var(--color-primary);
-    color: var(--color-bg);
+  &.active,
+  &:hover {
+    background: var(--color-border);
   }
 `;
 
-export const Section = styled(Vertical)`
-  margin-bottom: 2rem;
-  gap: 1rem;
-
-  h2 {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 1.6rem;
-    color: var(--color-heading);
-    text-align: center;
-  }
-`;
-
-export const StyledInput = styled.input`
-  padding: 0.75rem;
-  font-size: 1rem;
-  border-radius: 6px;
+/* ---------- base-form controls ------------------------------------ */
+const control = `
+  width: 100%;
+  padding: 0.6rem 0.8rem;
   border: 1px solid var(--color-border);
+  border-radius: 6px;
   background: var(--color-surface);
   color: var(--color-text);
+  font-size: 1rem;
 `;
 
+export const StyledInput = styled.input`${control}`;
+export const StyledSelect = styled.select`${control}`;
 export const StyledTextarea = styled.textarea`
-  padding: 0.75rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
+  ${control};
+  min-height: 90px;
   resize: vertical;
 `;
 
-export const StyledSelect = styled.select`
-  padding: 0.75rem;
-  font-size: 1rem;
-  border-radius: 6px;
+/* ---------- available list ---------------------------------------- */
+export const ListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+`;
+
+export const AvailableItem = styled.div`
+  padding: 0.6rem 1rem;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
-`;
-
-export const ListContainer = styled(Vertical)`
-  gap: 0.75rem;
-  border: 2px solid var(--color-border);
-  background: var(--color-surface);
-  border-radius: 10px;
-  padding: 1.25rem;
-`;
-
-export const AvailableItem = styled(Box)`
-  padding: 0.75rem 1rem;
-  background: transparent;
-  border: 2px solid var(--color-muted);
-  border-radius: 8px;
-  color: var(--color-text);
-  font-weight: 500;
-  text-align: center;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.15s;
 
   &:hover {
     background: var(--color-border);
   }
 `;
 
-export const ActiveCardContainer = styled(Vertical)`
-  padding: 1rem;
-  border: 2px solid var(--color-border);
-  border-radius: 10px;
-  background: var(--color-surface);
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+/* ---------- active cards ------------------------------------------ */
+export const ActiveCardsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 `;
 
-export const ControlRow = styled(Horizontal)`
-  gap: 0.75rem;
-  margin: 0.75rem 0 1rem 0;
-  button {
-    padding: 0.3rem 0.6rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: none;
-    background: var(--color-primary);
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+export const ActiveCardContainer = styled.div`
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+`;
 
-    &:hover {
-      transform: translateY(-1px);
+/* small arrow / delete buttons inside each card */
+export const ControlRow = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+
+  button {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+    transition: background 0.12s;
+
+    &:hover:not(:disabled) {
+      background: var(--color-border);
+    }
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
   }
 `;
 
-export const ControlButton = styled(Box)`
-  background: var(--color-primary);
-  color: white;
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-`;
-
-export const SaveButton = styled(ControlButton)`
-  background: #4caf50;
-`;
-
-export const ClearButton = styled(ControlButton)`
-  background: #f44336;
-`;
-
-export const ActionContainer = styled(Horizontal)`
-  gap: 2rem;
-  justify-content: center;
-  margin-top: 2rem;
-`;
-
-export const ActiveCardsWrapper = styled(Vertical)`
+/* ---------- footer action row ------------------------------------- */
+export const ActionContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+`;
+
+const largeBtn = `
+  padding: 0.7rem 1.6rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+`;
+
+export const SaveButton = styled.button`
+  ${largeBtn};
+  background: #2b8c2b;
+  color: #fff;
+
+  &:hover {
+    background: #247424;
+  }
+`;
+export const ClearButton = styled.button`
+  ${largeBtn};
+  background: #666;
+  color: #fff;
+
+  &:hover {
+    background: #444;
+  }
+`;
+export const DeleteButton = styled.button`
+  ${largeBtn};
+  background: #c33;
+  color: #fff;
+g
+  &:hover {
+    background: #a22;
+  }
 `;

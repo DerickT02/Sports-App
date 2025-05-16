@@ -1,3 +1,5 @@
+//Authentication
+
 //External imports
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import styled from 'styled-components'
@@ -5,10 +7,11 @@ import styled from 'styled-components'
 //Domestic imports
 import './App.css'
 import NavBar from './components/layout/NavBar'
-import { FullPageBackground, FullPageCenter } from './components/layout/atoms'
+import { FullPageBackground } from './components/layout/atoms'
+import Footer from './components/layout/Footer'
 
 // Pages
-import HomePage from './pages/homepage'
+import HomePage from './pages/homepage/Index'
 import AboutUs from './pages/about'
 import ShowCase from './pages/athletes/ShowCase'
 import ContactUs from './pages/contact'
@@ -17,17 +20,16 @@ import SignIn from './pages/signin'
 import Resources from './pages/resources'
 import TermsOfService from './pages/termsofservice'
 import PrivacyPolicy from './pages/privacypolicy'
-import AdminHome from "./pages/admin"
+import AdminHome from "./pages/admin/Index"
 import ManageAthlete from "./pages/admin/ManageAthlete"
 import AthletePortfolio from './pages/athletes/Portfolio'
+
 
 const AppContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  position: relative;
-  margin: 0;
-  padding: 0;
+  overflow-x: hidden;
 `;
 
 const MainContent = styled.main`
@@ -35,6 +37,7 @@ const MainContent = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: 80px;
 `;
 
 function App() {
@@ -66,6 +69,7 @@ function App() {
             <Route path="/admin-Manage_Athlete" element={<ManageAthlete />} />
           </Routes>
         </MainContent>
+        <Footer/>
       </Router>
     </AppContainer>
   )

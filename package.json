@@ -9,9 +9,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
-}
-{
+  "license": "ISC",
+
   "devDependencies": {
     "vite-plugin-svgr": "^4.3.0"
   },

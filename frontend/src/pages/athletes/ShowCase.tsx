@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { dummyAthletes } from '..//admin/dummyAthletes';
-import Footer from '../../components/Footer';
 
 /* ---------- Styled Components ---------- */
 const ShowcaseContainer = styled.div`
@@ -118,7 +117,6 @@ export default function ShowCase() {
           </Link>
         ))}
       </ShowcaseContainer>
-      <Footer />
     </>
   );
 }

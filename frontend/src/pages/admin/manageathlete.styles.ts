@@ -153,7 +153,7 @@ export const DeleteButton = styled.button`
   ${largeBtn};
   background: #c33;
   color: #fff;
-
+g
   &:hover {
     background: #a22;
   }

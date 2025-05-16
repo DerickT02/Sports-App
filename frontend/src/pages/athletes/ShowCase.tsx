@@ -1,8 +1,9 @@
-// src/pages/athletes/ShowCase.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { dummyAthletes } from '../admin/dummyAthletes';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../../firebase'; // adjust this import based on your project structure
+import { Athlete } from '../../../../shared/types/athlete';
 
 /* ---------- shared shimmer ---------- */
 const shimmer = keyframes`
@@ -15,58 +16,46 @@ const ShowcaseContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
-  padding: 2rem 2rem 4rem;          /* bottom pad so it never touches footer */
-  padding-top: 100px;               /* clear the navbar */
+  padding: 2rem 2rem 4rem;
+  padding-top: 100px;
   box-sizing: border-box;
 `;
 
-/* outer wrapper that gives the shimmering border */
 const ShowcaseCard = styled.div`
   position: relative;
   border-radius: 14px;
-  padding: 6px;                     /* border thickness */
-  background: linear-gradient(
-      135deg,
-      #383838,
-      #2f2f2f,
-      #454545,
-      #292929,
-      #3a3a3a
-    );
+  padding: 6px;
+  background: linear-gradient(135deg, #383838, #2f2f2f, #454545, #292929, #3a3a3a);
   background-size: 400% 400%;
   animation: shimmer 8s ease infinite;
   transition: all 0.3s ease;
   transform-style: preserve-3d;
+  max-width: 350px;
 
   &:hover {
     transform: perspective(1000px) rotateX(6deg) rotateY(6deg) scale(1.02);
-    box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.35),
-      0  8px 20px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 8px 20px rgba(0, 0, 0, 0.18);
   }
 
-  /* inner box */
   > div {
     border-radius: 12px;
     padding: 1.5rem;
     padding-top: 30px;
     height: 100%;
     width: 100%;
+    max-width: 260px;
     background: linear-gradient(145deg, #2e2e2e, #222);
-    box-shadow:
-      inset 0  2px 4px  rgba(255, 255, 255, 0.04),
-      inset 0 -2px 4px  rgba(0,   0,   0,   0.35);
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.04), inset 0 -2px 4px rgba(0, 0, 0, 0.35);
   }
 `;
 
-/* skeleton shown until the img finishes loading */
 const PhotoSkeleton = styled.div`
   width: 100%;
   height: 330px;
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  background: #2a2a2a;              /* base */
+  background: #2a2a2a;
 
   &::after {
     content: '';
@@ -104,30 +93,31 @@ const AthleteText = styled.p`
   margin: 0.25rem 0;
 `;
 
-/* ---------- Small helper so we can use hooks per-card ---------- */
+const NoAthletesMessage = styled.div`
+  text-align: center;
+  color: #ccc;
+  font-size: 1.5rem;
+  padding-top: 100px;
+`;
+
+/* ---------- Card Component ---------- */
 interface CardProps {
-  athlete: (typeof dummyAthletes)[number];
+  athlete: Athlete;
 }
 
 const AthleteCard: React.FC<CardProps> = ({ athlete }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <Link
-      to={`/athletes/${athlete._id}`}
-      style={{ textDecoration: 'none' }}
-    >
+    <Link to={`/athletes/${athlete._id}`} style={{ textDecoration: 'none' }}>
       <ShowcaseCard>
-        {/* shimmer placeholder */}
         {!loaded && <PhotoSkeleton />}
-
         <ShowcasePhoto
           src={athlete.portraitPhoto || ''}
           alt={`${athlete.firstName} ${athlete.lastName}`}
           onLoad={() => setLoaded(true)}
           style={{ display: loaded ? 'block' : 'none' }}
         />
-
         <AthleteName>
           {athlete.firstName} {athlete.lastName}
         </AthleteName>
@@ -138,12 +128,42 @@ const AthleteCard: React.FC<CardProps> = ({ athlete }) => {
   );
 };
 
-/* ---------- Main Component ---------- */
+/* ---------- Main Showcase Component ---------- */
 export default function ShowCase() {
+  const [athletes, setAthletes] = useState<Athlete[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAthletes = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, 'athletes'));
+        const data: Athlete[] = snapshot.docs.map(doc => ({
+          _id: doc.id,
+          ...doc.data()
+        })) as Athlete[];
+        setAthletes(data);
+      } catch (error) {
+        console.error("Failed to fetch athletes:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAthletes();
+  }, []);
+
+  if (loading) {
+    return <div style={{ paddingTop: "120px", textAlign: "center", color: "#ccc" }}>Loading athletes...</div>;
+  }
+
+  if (athletes.length === 0) {
+    return <NoAthletesMessage>No Athletes Available</NoAthletesMessage>;
+  }
+
   return (
     <ShowcaseContainer>
-      {dummyAthletes.map((ath, idx) => (
-        <AthleteCard key={idx} athlete={ath} />
+      {athletes.map((athlete) => (
+        <AthleteCard key={athlete._id} athlete={athlete} />
       ))}
     </ShowcaseContainer>
   );

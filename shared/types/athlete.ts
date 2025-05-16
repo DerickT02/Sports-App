@@ -7,9 +7,8 @@ export interface Athlete {
   firstName: string;
   lastName: string;
   year: 'Freshman' | 'Sophomore' | 'Junior' | 'Senior';
-  sports: string;
+  sport: string;
   portraitPhoto: string;
-  actionPhoto?: string;
   biography?: string;
   portfolioData?: DataCard[]; // Now a single array of DataCard objects
   isDeleted?: boolean;

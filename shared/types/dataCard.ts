@@ -4,6 +4,7 @@ export type DataCardType =
   | 'footballSeason'
   | 'baseballSeason'
   | 'soccerSeason'
+  | 'basketballSeason'
   | 'custom';          // leave this for anything free-form later
 
 export interface FootballSeasonStatsData {
@@ -36,6 +37,15 @@ export interface SoccerSeasonStatsData {
   cleanSheets?: number;   // for keepers
 }
 
+export interface BasketballSeasonStatsData {
+  teamName: string;       // The name of the basketball team
+  season: number;         // The season year (e.g., 2023)
+  games: number;          // Number of games played in the season
+  pointsPerGame: number;  // Average points per game
+  reboundsPerGame: number; // Average rebounds per game
+  assistsPerGame: number;  // Average assists per game
+}
+
 export type DataCard =
   | {
       type: 'footballSeason';
@@ -54,6 +64,12 @@ export type DataCard =
       title: string;
       instanceId: string;
       data: SoccerSeasonStatsData;
+    }
+  | {
+      type: 'basketballSeason';
+      title: string;
+      instanceId: string;
+      data: BasketballSeasonStatsData;
     }
   | {
       type: 'custom';

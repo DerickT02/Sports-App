@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Athlete } from '../../../../shared/types/athlete';
-import { DataCard, DataCardType, FootballSeasonStatsData } from '../../../../shared/types/dataCard';
-
+import { DataCard, DataCardType } from '../../../../shared/types/dataCard';
+import { db, storage } from '../../../firebase'; 
+import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
   PageContainer,
   ToggleContainer,
@@ -21,109 +23,219 @@ import {
   ActiveCardsWrapper,
 } from './manageathlete.styles';
 
-import { Box, Vertical } from '../../components/layout/atoms';
-import { getAthletes, addAthlete, updateAthlete, deleteAthlete } from '../../api/athletes';
+import { Box } from '../../components/layout/atoms';
 
-/* ------------------------------------------------------------------ */
-interface DataCardOption { id: number; title: string; type: DataCardType; }
-type ActiveCard = DataCard;
-
+// Data card options
 const OPTIONS: DataCardOption[] = [
-  { id: 1, title: 'Football Stats Card (A)', type: 'footballStats' },
-  { id: 2, title: 'Football Stats Card (B)', type: 'footballStats' },
+  { id: 1, title: 'Football Stats Card', type: 'footballSeason' },
+  { id: 2, title: 'Baseball Stats Card', type: 'baseballSeason' },
+  { id: 3, title: 'Basketball Stats Card', type: 'basketballSeason' },
+  { id: 4, title: 'Soccer Stats Card', type: 'soccerSeason' },
 ];
 
-const ManageAthlete: React.FC = () => {
-  /* ---------- server data ---------- */
-  const [athletes, setAthletes] = useState<Athlete[]>([]);
-  useEffect(() => { getAthletes().then(r => setAthletes(r.data)); }, []);
+interface DataCardOption { 
+  id: number; 
+  title: string; 
+  type: DataCardType; 
+}
 
-  /* ---------- form state ---------- */
+type DataCardType = 'footballSeason' | 'baseballSeason' | 'basketballSeason' | 'soccerSeason';
+
+const ManageAthlete: React.FC = () => {
+  const [athletes, setAthletes] = useState<Athlete[]>([]);
   const [mode, setMode] = useState<'add' | 'edit'>('add');
   const [selectedId, setSelectedId] = useState('');
   const [base, setBase] = useState({
     firstName: '', lastName: '', year: 'Freshman' as Athlete['year'],
-    sports: '', portraitPhoto: '', biography: '',
+    sport: '', portraitPhoto: '', biography: '', portraitPhotoFile: null as File | null,
   });
-  const [cards, setCards] = useState<ActiveCard[]>([]);
+  const [cards, setCards] = useState<DataCard[]>([]);
 
-  /* ---------- helpers ---------- */
+  // Fetch athletes from Firestore
+  useEffect(() => {
+    const fetchAthletes = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, 'athletes'));
+        const data: Athlete[] = snapshot.docs.map(doc => ({
+          _id: doc.id,
+          ...doc.data()
+        })) as Athlete[];
+        setAthletes(data);
+      } catch (error) {
+        console.error('Error fetching athletes:', error);
+      }
+    };
+    fetchAthletes();
+  }, []);
+
   const reset = () => {
-    setBase({ firstName: '', lastName: '', year: 'Freshman', sports: '', portraitPhoto: '', biography: '' });
-    setCards([]); setSelectedId('');
+    setBase({ firstName: '', lastName: '', year: 'Freshman', sport: '', portraitPhoto: '', biography: '', portraitPhotoFile: null });
+    setCards([]); 
+    setSelectedId('');
   };
-  const instanceId = (o: DataCardOption) => `${o.id}-${Date.now()}-${Math.random().toString(36).slice(2,9)}`;
 
-  /* ---------- card ops ---------- */
-  const addCard = (o: DataCardOption) =>
-    setCards(c => [...c, { instanceId: instanceId(o), type: o.type, title: o.title,
-      data: { teamName: '', season: 0, wins: 0, losses: 0 } }]);
-
-  const swap = (i: number, j: number) =>
-    setCards(c => { const arr = [...c]; [arr[i], arr[j]] = [arr[j], arr[i]]; return arr; });
-
-  const removeCard = (id: string) => setCards(c => c.filter(k => k.instanceId !== id));
-
-  /* ---------- athlete selection ---------- */
   const loadAthlete = (a: Athlete) => {
-    setBase({ firstName: a.firstName, lastName: a.lastName, year: a.year,
-      sports: a.sports, portraitPhoto: a.portraitPhoto, biography: a.biography ?? '' });
-    setCards((a.portfolioData ?? []) as ActiveCard[]);
+    setBase({
+      firstName: a.firstName, lastName: a.lastName, year: a.year,
+      sport: a.sport, portraitPhoto: a.portraitPhoto, biography: a.biography ?? '',
+      portraitPhotoFile: null, // Reset portrait file when loading an athlete
+    });
+    setCards(a.portfolioData ?? []);
   };
 
-  /* ---------- save / delete ---------- */
   const save = async () => {
     const payload: Partial<Athlete> = { ...base, portfolioData: cards };
-    mode === 'add' ? await addAthlete(payload) :
-    selectedId && await updateAthlete(selectedId, payload);
-    getAthletes().then(r => setAthletes(r.data));
-    if (mode === 'add') reset();
+    console.log('Uploaded successfully.:', {payload});
+    
+    try {
+      if (mode === 'add') {
+        // Save the new athlete to Firestore
+        const docRef = await addDoc(collection(db, 'athletes'), payload);
+        
+        // Optionally, update the state to include the newly added athlete
+        const newAthlete = { ...payload, _id: docRef.id }; // Include the Firestore document ID
+        setAthletes((prev) => [...prev, newAthlete]); // Add the new athlete to the state
+      } else {
+        // Handle updating existing athlete logic here
+        await addDoc(collection(db, 'athletes'), payload); // If it's an update, use the appropriate Firestore method
+      }
+      console.log('Athlete saved successfully:', payload);
+    } catch (error) {
+      console.error("Error saving athlete:", error);
+    }
+    reset();
   };
 
   const removeAthlete = async () => {
     if (!selectedId) return;
-    if (!window.confirm('Delete this athlete permanently?')) return;
-    await deleteAthlete(selectedId);
-    getAthletes().then(r => setAthletes(r.data));
-    reset();
+
+    try {
+      if (window.confirm('Delete this athlete permanently?')) {
+        const athleteRef = doc(db, 'athletes', selectedId);
+        await deleteDoc(athleteRef); // Delete athlete from Firestore
+
+        // Remove the athlete from the local state
+        setAthletes(prev => prev.filter(a => a._id !== selectedId));
+
+        reset(); // Reset the form and selected athlete
+      }
+    } catch (error) {
+      console.error('Error deleting athlete:', error);
+    }
   };
 
-  /* ---------- UI ---------- */
+  const addCard = (o: DataCardOption) => {
+    const newCard: DataCard = { 
+      instanceId: Date.now().toString(), 
+      type: o.type, 
+      title: o.title, 
+      data: {} 
+    };
+    setCards(c => [...c, newCard]);
+  };
+
+  const removeCard = (instanceId: string) => {
+    setCards(c => c.filter(card => card.instanceId !== instanceId));
+  };
+
+  const updateCardData = (instanceId: string, field: string, value: any) => {
+    setCards(prevCards => 
+      prevCards.map(card => {
+        if (card.instanceId === instanceId) {
+          return { 
+            ...card, 
+            data: { 
+              ...card.data, 
+              [field]: value 
+            } 
+          };
+        }
+        return card;
+      })
+    );
+  };
+
+  const swap = (i: number, j: number) => {
+    setCards(c => {
+      const newCards = [...c];
+      [newCards[i], newCards[j]] = [newCards[j], newCards[i]]; // Swap cards
+      return newCards;
+    });
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      // Create a storage reference with a unique file name (e.g. timestamp + file name)
+      const fileRef = ref(storage, `athletePortraits/${Date.now()}_${file.name}`);
+
+      // Upload the file
+      await uploadBytes(fileRef, file);
+
+      // Get the URL
+      const url = await getDownloadURL(fileRef);
+
+      // Update state with the image URL (for portraitPhoto)
+      setBase((prev) => ({
+        ...prev,
+        portraitPhoto: url, // store the download URL, not the file itself
+      }));
+
+    } catch (error) {
+      console.error('Upload failed:', error);
+      // Optionally show a user-facing error message
+    }
+  };
+
   return (
     <PageContainer>
-      {/* toggle */}
       <ToggleContainer>
-        <ToggleButton onClick={() => { if (mode!=='add') { reset(); setMode('add'); } }} className={mode === 'add' ? 'active' : ''}>Add New</ToggleButton>
-        <ToggleButton onClick={() => { if (mode!=='edit') { reset(); setMode('edit'); } }} className={mode === 'edit' ? 'active' : ''}>Edit Existing</ToggleButton>
+        <ToggleButton onClick={() => { if (mode !== 'add') { reset(); setMode('add'); } }} className={mode === 'add' ? 'active' : ''}>Add New</ToggleButton>
+        <ToggleButton onClick={() => { if (mode !== 'edit') { reset(); setMode('edit'); } }} className={mode === 'edit' ? 'active' : ''}>Edit Existing</ToggleButton>
 
         {mode === 'edit' && (
-          <StyledSelect value={selectedId} onChange={e => { setSelectedId(e.target.value); const a = athletes.find(x => x._id === e.target.value); if (a) loadAthlete(a); }}>
+          <StyledSelect value={selectedId} onChange={e => { 
+            const selectedAthleteId = e.target.value;
+            setSelectedId(selectedAthleteId); 
+            const selectedAthlete = athletes.find(a => a._id === selectedAthleteId);
+            if (selectedAthlete) loadAthlete(selectedAthlete); 
+          }}>
             <option value="">Select athlete</option>
-            {athletes.map(a => <option key={a._id} value={a._id}>{a.firstName} {a.lastName}</option>)}
+            {athletes.map(a => (
+              <option key={a._id} value={a._id}>{a.firstName} {a.lastName}</option>
+            ))}
           </StyledSelect>
         )}
       </ToggleContainer>
 
-      {/* base info */}
       <Section>
         <h2>Base Athlete Information</h2>
-        <StyledInput placeholder="First name" value={base.firstName}  onChange={e => setBase({ ...base, firstName: e.target.value })} />
-        <StyledInput placeholder="Last name"  value={base.lastName}   onChange={e => setBase({ ...base, lastName:  e.target.value })} />
+        <StyledInput placeholder="First name" value={base.firstName} onChange={e => setBase({ ...base, firstName: e.target.value })} />
+        <StyledInput placeholder="Last name" value={base.lastName} onChange={e => setBase({ ...base, lastName: e.target.value })} />
         <StyledSelect value={base.year} onChange={e => setBase({ ...base, year: e.target.value as Athlete['year'] })}>
-          {['Freshman','Sophomore','Junior','Senior'].map(y => <option key={y} value={y}>{y}</option>)}
+          {['Freshman', 'Sophomore', 'Junior', 'Senior'].map(y => <option key={y} value={y}>{y}</option>)}
         </StyledSelect>
-        <StyledInput placeholder="Sports" value={base.sports} onChange={e => setBase({ ...base, sports: e.target.value })} />
-        <StyledInput placeholder="Portrait URL" value={base.portraitPhoto} onChange={e => setBase({ ...base, portraitPhoto: e.target.value })} />
+        <StyledSelect value={base.sport} onChange={e => setBase({ ...base, sport: e.target.value as Athlete['sport'] })}>
+          {['Football', 'Basketball', 'Baseball', 'Soccer'].map(y => <option key={y} value={y}>{y}</option>)}
+        </StyledSelect>
+        {/* File input for portrait */}
+        <input type="file" onChange={handleFileChange} />
         <StyledTextarea placeholder="Biography" value={base.biography} onChange={e => setBase({ ...base, biography: e.target.value })} />
       </Section>
 
-      {/* options */}
       <Section>
         <h2>Available Data Cards</h2>
-        <ListContainer>{OPTIONS.map(o => <AvailableItem key={o.id} onClick={() => addCard(o)}>{o.title}</AvailableItem>)}</ListContainer>
+        <ListContainer>
+          {OPTIONS.map(o => (
+            <AvailableItem key={o.id} onClick={() => addCard(o)}>
+              {o.title}
+            </AvailableItem>
+          ))}
+        </ListContainer>
       </Section>
 
-      {/* active cards */}
       <Section>
         <h2>Active Data Cards</h2>
         <ActiveCardsWrapper>
@@ -131,35 +243,46 @@ const ManageAthlete: React.FC = () => {
             <ActiveCardContainer key={card.instanceId}>
               <Box fontWeight={700}>{card.title}</Box>
               <ControlRow>
-                <button disabled={i===0} onClick={() => swap(i, i-1)}>↑</button>
-                <button disabled={i===cards.length-1} onClick={() => swap(i, i+1)}>↓</button>
+                <button disabled={i === 0} onClick={() => swap(i, i - 1)}>↑</button>
+                <button disabled={i === cards.length - 1} onClick={() => swap(i, i + 1)}>↓</button>
                 <button onClick={() => removeCard(card.instanceId)}>✕</button>
               </ControlRow>
-              {/* football card editor */}
-              {card.type==='footballStats' && (
-                <Vertical gap="0.5rem">
-                  {(['teamName','season','wins','losses'] as const).map(field => (
-                    <StyledInput key={field} type={field==='teamName' ? 'text':'number'}
-                      placeholder={field.charAt(0).toUpperCase()+field.slice(1)}
-                      value={(card.data as any)[field] ?? ''}
-                      onChange={e => {
-                        const v = field==='teamName' ? e.target.value : Number(e.target.value);
-                        setCards(list => list.map(c => c.instanceId===card.instanceId ? { ...c, data:{ ...(c.data as any), [field]:v } }:c));
-                      }} />
-                  ))}
-                </Vertical>
+
+              {/* Editable fields for each data card */}
+              {card.type === 'footballSeason' && (
+                <>
+                  <StyledInput
+                    placeholder="Team Name"
+                    value={card.data.teamName ?? ''}
+                    onChange={(e) => updateCardData(card.instanceId, 'teamName', e.target.value)}
+                  />
+                  <StyledInput
+                    placeholder="Season"
+                    value={card.data.season ?? ''}
+                    onChange={(e) => updateCardData(card.instanceId, 'season', e.target.value)}
+                  />
+                  <StyledInput
+                    placeholder="Wins"
+                    value={card.data.wins ?? ''}
+                    onChange={(e) => updateCardData(card.instanceId, 'wins', e.target.value)}
+                  />
+                  <StyledInput
+                    placeholder="Losses"
+                    value={card.data.losses ?? ''}
+                    onChange={(e) => updateCardData(card.instanceId, 'losses', e.target.value)}
+                  />
+                </>
               )}
             </ActiveCardContainer>
           ))}
         </ActiveCardsWrapper>
       </Section>
 
-      {/* actions */}
       <Section>
         <ActionContainer>
           <ClearButton onClick={reset}>Clear</ClearButton>
-          {mode==='edit' && selectedId && <DeleteButton onClick={removeAthlete}>Delete Athlete</DeleteButton>}
           <SaveButton onClick={save}>Save Athlete</SaveButton>
+          {mode === 'edit' && selectedId && <DeleteButton onClick={removeAthlete}>Delete Athlete</DeleteButton>}
         </ActionContainer>
       </Section>
     </PageContainer>

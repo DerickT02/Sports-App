@@ -11,3 +11,13 @@
   "author": "",
   "license": "ISC"
 }
+{
+  "devDependencies": {
+    "vite-plugin-svgr": "^4.3.0"
+  },
+  "dependencies": {
+    "react-icons": "^5.5.0",
+    "styled-components": "^6.1.17",
+    "styled-system": "^5.1.5"
+  }
+}

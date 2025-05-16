@@ -11,7 +11,7 @@ import { FullPageBackground } from './components/layout/atoms'
 import Footer from './components/layout/Footer'
 
 // Pages
-import HomePage from './pages/homepage/Index'
+import HomePage from './pages/homepage'
 import AboutUs from './pages/about'
 import ShowCase from './pages/athletes/ShowCase'
 import ContactUs from './pages/contact'
@@ -20,7 +20,7 @@ import SignIn from './pages/signin'
 import Resources from './pages/resources'
 import TermsOfService from './pages/termsofservice'
 import PrivacyPolicy from './pages/privacypolicy'
-import AdminHome from "./pages/admin/Index"
+import AdminHome from "./pages/admin"
 import ManageAthlete from "./pages/admin/ManageAthlete"
 import AthletePortfolio from './pages/athletes/Portfolio'
 

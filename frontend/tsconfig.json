@@ -1,10 +1,4 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -19,11 +13,13 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "noEmit": false,  // Change to false to allow emitting output
     "jsx": "react-jsx",
     "types": ["vite/client"]
   },
-  "include": ["src", "vite-env.d.ts"]
-
-
+  "include": ["src", "vite-env.d.ts"],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

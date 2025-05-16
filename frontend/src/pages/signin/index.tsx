@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import {auth} from '../../../firebase'
 
 /* ============  styled-components  ============ */
 
@@ -97,15 +99,16 @@ const SignIn: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit =  (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await login(email, password);           // <-- hits your /auth/login
-      localStorage.setItem('token', res.data.token);
-      navigate('/admin-home');
-    } catch (err: any) {
-      setError(err.response?.data?.msg || 'Login failed');
-    }
+    
+      signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        const user = userCredential.user;
+        navigate("/admin-home")
+        console.log(user);
+      }).catch((err) => {
+        console.log(err)
+      })
   };
 
   return (

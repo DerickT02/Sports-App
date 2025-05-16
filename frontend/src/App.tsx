@@ -1,3 +1,5 @@
+//Authentication
+
 //External imports
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import styled from 'styled-components'

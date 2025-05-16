@@ -21,6 +21,7 @@ import {
 
 import { useTheme } from '../../context/ThemeContext';
 import Logo from '../../assets/ClientLogo.png';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 const navItems = [
   { label: 'About Us', route: '/about-us' },
@@ -30,7 +31,7 @@ const navItems = [
   { label: 'Contact Us', route: '/contact-us' },
   //{ label: 'Terms Of Service', route: './terms-of-service' },
   //{ label: 'Privacy Policy', route: './privacy-policy' },
-  { label: 'Admin', route: '/admin-home', style: { color: 'red' } },
+  //{ label: 'Admin', route: '/admin-home', style: { color: 'red' } },
 
 ]
 
@@ -38,9 +39,18 @@ const NavBar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const isActive = (route: string) => location.pathname === route
-
+  const auth = getAuth()
   const {isDark, toggleTheme } = useTheme();
+  onAuthStateChanged(auth,(user) => {
+      if(user){
+        setIsLoggedIn(true)
+      }
+      else{
+        setIsLoggedIn(false)
+      }
+    })
 
   return (
   <HeaderContainer>
@@ -75,9 +85,20 @@ const NavBar: React.FC = () => {
           </ThemeIcon>
 
           {/* Sign In */}
+          {isLoggedIn ? 
+          
+          <>
+          <SignInButton onClick={() => { navigate('/admin-home'); setMenuOpen(false) }}>
+            <SignUpText>Admin</SignUpText>
+          </SignInButton>
+          </> : 
+          
+          <>
           <SignInButton onClick={() => { navigate('/sign-in'); setMenuOpen(false) }}>
             <SignUpText>Sign In</SignUpText>
           </SignInButton>
+          </>}
+          
         </RightSideUtility>
       </HeaderContent>
 

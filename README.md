@@ -3,12 +3,14 @@ Getting Started – Cloning the Repository
 To get started with the project locally, follow these steps:
 1.	Clone the GitHub Repository
 Use the following commands in your terminal:
+```
 git clone https://github.com/DerickT02/Sports-App.git
 cd Sports-App/frontend
-2.	Install dependencies
+```
+3.	Install dependencies
 Using npm:
 npm install
-3.	Run the development server
+4.	Run the development server
 npm run dev
 
 
@@ -94,4 +96,14 @@ interface ImportMeta {
 •	Clarity: Clearly documents which environment variables are required.
 🛑 Don’t forget to add .env to your .gitignore so secrets aren't committed!
  
-
+Building to production
+1. Go to frontend
+```
+git clone https://github.com/DerickT02/Sports-App.git
+cd Sports-App/frontend
+```
+2. run command
+```
+npx vite build
+```
+3. Get dist folder. This folder can be used to deploy project to production

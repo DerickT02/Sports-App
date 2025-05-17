@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../../components/Footer';
@@ -33,13 +33,15 @@ const Item = styled.div`
   padding: 1.5rem;
   border-radius: 8px;
   text-align: left;
+  overflow: hidden;
 `;
 
 const ItemTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
   color: var(--color-primary);
-  text-align: center;
+  text-align: left;
+  justify-content: space-between;
 `;
 
 const Subheading = styled.h3`
@@ -57,12 +59,6 @@ const ItemText = styled.p`
 const CTA = styled.div`
   text-align: center;
   margin-top: 3rem;
-`;
-
-const CTAHeading = styled.h2`
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: var(--color-heading);
 `;
 
 const CTAText = styled.p`
@@ -89,6 +85,47 @@ const CTAButton = styled.button`
   }
 `;
 
+const LeftBox = styled.div`
+  text-align: left;
+  margin-left: 0;
+`;
+
+
+const ItemBody = styled.div<{ isOpen: boolean }>`
+   max-height: ${({ isOpen }) => (isOpen ? '2000px' : '0')};
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  overflow: hidden;
+  transition: 
+    max-height 0.3s ease, 
+    opacity 0.3s ease, 
+    padding 0.3s ease;
+
+  padding: ${({ isOpen }) => (isOpen ? '1rem 1.5rem' : '0 1.5rem')};
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
+`;
+
+/* ---------- AccordionItem Component ---------- */
+function AccordionItem({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <Item>
+      <ItemTitle onClick={() => setIsOpen((o) => !o)}>
+        <h2>{title}<span>{isOpen ? '▲' : '▼'}</span></h2>
+      </ItemTitle>
+      <ItemBody isOpen={isOpen}>{children}</ItemBody>
+    </Item>
+  );
+}
+
 /* ---------- Main Component ---------- */
 function PrivacyPolicy() {
   const navigate = useNavigate();
@@ -103,33 +140,30 @@ function PrivacyPolicy() {
       (the “Site”)
       </Intro>
 
-      <Item>
-        <ItemTitle>Collecting Personal Information</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Collecting Personal Information">
+        <p>
         When you visit our Site, we collect certain information about your device, your interactions
         with the Site, and data needed to process purchases or provide our services. We may also
         collect additional information if you contact us directly. “Personal Information” refers to any
         information that can uniquely identify you. Below are the types of Personal Information we
         collect and why:
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>Device Information</ItemTitle>
-        <ItemText>
-          <strong>Examples of data collected</strong>: browser type, IP address, time zone, cookie data, pages/products
-          viewed, search terms, and site interaction behavior.<br/>
-          <strong>Purpose</strong>: to display our Site properly, and for analytics to improve user experience.<br/>
-          <strong>How We Collect It</strong>: automatically, using cookies, log files, pixels, tags, or other tracking
-          technologies.<br/>
-          <strong>Disclosure</strong>: shared with our analytics and hosting service providers (e.g., Google Analytics,
-          Shopify, or other platforms we use).<br/>
-        </ItemText>
-      </Item>
+        <AccordionItem title = "Device Information">
+        <p>
+        <strong>Examples of data collected</strong>: browser type, IP address, time zone, cookie data, pages/products
+        viewed, search terms, and site interaction behavior.<br/>
+        <strong>Purpose</strong>: to display our Site properly, and for analytics to improve user experience.<br/>
+        <strong>How We Collect It</strong>: automatically, using cookies, log files, pixels, tags, or other tracking
+        technologies.<br/>
+        <strong>Disclosure</strong>: shared with our analytics and hosting service providers (e.g., Google Analytics,
+        Shopify, or other platforms we use).<br/>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Order & Service Information</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Order & Service Information">
+        <p>
         <strong>Examples of data collected</strong>: name, billing/shipping address, payment details (credit card, Apple
         Pay, etc.), email address, and phone number.<br/>
         <strong>Purpose</strong>: to fulfill contracts, process payments, arrange services or product delivery, send
@@ -138,41 +172,37 @@ function PrivacyPolicy() {
         service.<br/>
         <strong>Disclosure</strong>: shared with payment processors, CRM tools, email marketing platforms, or other
         vendors necessary to deliver our services.<br/>
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Customer Support</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Customer Support">
+        <p>
         <strong> Examples of Data Collected</strong>: any personal details you share while requesting support (e.g.,
         contact details, case details).<br/>
         <strong>Purpose</strong>: to help resolve your issues and provide better service.<br/>
         <strong>How We Collect It</strong>: directly from you.<br/>
         <strong>Disclosure</strong>: may be shared with third-party support platforms we use.<br/>
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Minors</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Minors">
+        <p>
         Our services are not intended for individuals under the age of 13. We do not knowingly collect
         Personal Information from children. If you are a parent or guardian and believe your child has
         provided us with personal data, please contact us to have it removed.
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Sharing Your Information</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Sharing Your Information">
+        <p>
         Our services are not intended for individuals under the age of 13. We do not knowingly collect
         Personal Information from children. If you are a parent or guardian and believe your child has
         provided us with personal data, please contact us to have it removed.
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Behavioural Advertising</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Behavioural Advertising">
+        <p>
         We may use your Personal Information to show you relevant ads or marketing. This may
         include sharing data with: <br/>
         <li>Google Analytics - <a href = "https://policies.google.com/privacy">Learn more </a> or <a href = "https://tools.google.com/dlpage/gaoptout">opt-out</a></li>
@@ -182,53 +212,47 @@ function PrivacyPolicy() {
         <li><a href="https://www.google.com/settings/ads/anonymous">Google</a></li>
         <li><a href= "https://advertise.bingads.microsoft.com/en-us/resources/policies/personalized-ads">Bing</a></li>
         <li><a href="http://optout.aboutads.info/">Or visit the Digital Advertising Alliance opt-out page</a></li>
+        </p>
+        </AccordionItem>
 
-        </ItemText>
-      </Item>
-
-      <Item>
-        <ItemTitle>Using Personal  Information</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Using Personal  Information">
+        <p>
         We use your Personal Information to: <br/>
         <li>Offer and deliver our services (e.g., athlete representation, merchandise, digital
         content)</li>
         <li>Communicate with you</li>
         <li>Provide updates and marketing communications</li>
         <li>Comply with legal obligations</li>
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>GDPR Compliance (If Applicable)</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "GDPR Compliance (If Applicable)">
+        <p>
         If you are located in the European Economic Area (EEA), we process your Personal Information
         based on: <br/>
         <li>Your consent</li>
         <li>Performance of a contract</li>
         <li>Legal compliance</li>
         <li>Our legitimate interests (provided they do not override your rights)</li>
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Retention</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Retention">
+        <p>
         We retain your information as long as necessary to fulfill our services and legal obligations. You
         may request deletion of your data at any time.
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Automated Decision Making</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Automated Decision Making">
+        <p>
         We do not engage in fully automated decision-making that has a legal or significant effect on
         users.
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Information We Collect</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Information We Collect">
+        <p>
         <Subheading><strong>Device Information</strong></Subheading>
         -<strong>Examples collected</strong>: browser type, IP address, time zone, cookie data, pages
         viewed, search queries, and interactions with the Site.<br/>
@@ -251,23 +275,21 @@ function PrivacyPolicy() {
         -<strong>How we collect it</strong>: directly from you.<br/>
         -<strong>Who we share it with</strong>: support ticketing platforms or contractors assisting with
         customer service. <br/>
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Sharing Personal Information</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Sharing Personal Information">
+        <p>
         We may share your personal information with third parties that help us operate the Site, fulfill
         orders, or analyze performance. These include payment providers, shipping carriers, email
         platforms, and advertising networks.
         We may also disclose information to comply with legal obligations, protect rights, or respond to
         law enforcement.
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Behavioral Advertising</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Behavioral Advertising">
+        <p>
         We may use your information to serve personalized ads or marketing messages based on your
         interactions with the Site.<br/>
         Examples:
@@ -278,24 +300,22 @@ function PrivacyPolicy() {
         <li>Facebook: <a href = "https://www.facebook.com/settings/?tab=ads">https://www.facebook.com/settings/?tab=ads</a></li>
         <li>Google:<a href = "https://www.google.com/settings/ads/anonymous"> https://www.google.com/settings/ads/anonymous</a></li>
         <li>General: <a href = "http://optout.aboutads.info/">http://optout.aboutads.info/</a></li>
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Using Your Information</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Using Your Information">
+        <p>
         We use your information to:
         <li>Offer and deliver products or services</li>
         <li>Process payments and send receipts</li>
         <li>Fulfill orders and arrange shipping</li>
         <li>Communicate updates or promotions</li>
-        <li>Improve and secure our services</li>
-        </ItemText>
-      </Item>
+        <li>Improve and secure our services</li> 
+        </p>
+        </AccordionItem>
 
-      <Item>
-        <ItemTitle>Your Rights</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Your Rights">
+        <p>
         <Subheading><strong>CCPA (if applicable)</strong></Subheading>
         California residents may:
         <li>Request access to the personal data we hold</li>
@@ -304,13 +324,11 @@ function PrivacyPolicy() {
         <li>Designate an authorized agent to act on their behalf</li>
         We do not sell personal data in the conventional sense, but we may share it with third parties
         as described.
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-
-      <Item>
-        <ItemTitle>Cookies</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Cookies">
+        <p>
         We use cookies to support site functionality, track visitor behavior, and enhance your
         experience. These may include: <br/>
         <strong>Cookie Name & Purpose</strong> <br/>
@@ -319,38 +337,34 @@ function PrivacyPolicy() {
         _analytics Website    :     usage analysis<br/>
         _marketing_pref       :     Stores your ad tracking choice <br/>
         You can manage cookies through your browser settings. Learn more at
-        <a href = "www.allaboutcookies.org"> www.allaboutcookies.org </a>.
-        </ItemText>
-      </Item>
+        <a href = "www.allaboutcookies.org"> www.allaboutcookies.org </a>. 
+        </p>
+        </AccordionItem>
 
-
-      <Item>
-        <ItemTitle>Do Not Track</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Do Not Track">
+        <p>
         We do not currently respond to "Do Not Track" signals due to a lack of industry standards.
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-
-      <Item>
-        <ItemTitle>Changes to This Policy</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Changes to This Policy">
+        <p>
         We may revise this Privacy Policy periodically to reflect operational, legal, or regulatory
         updates. The latest version will always be available on our Site.
-        </ItemText>
-      </Item>
+        </p>
+        </AccordionItem>
 
-
-      <Item>
-        <ItemTitle>Contact Us</ItemTitle>
-        <ItemText>
+        <AccordionItem title = "Contact Us">
+        <p>
         For any privacy-related questions, requests, or complaints, please contact: <br/>
         <strong>Players Club Management</strong><br/>
         Playersclubmgmtsjz@gmail.com<br/>
         17325 Wabash Ave<br/>
+        </p>
+        </AccordionItem>
+      
 
-        </ItemText>
-      </Item>
+      
 
 
     </Page>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../../components/Footer';
@@ -33,13 +33,15 @@ const Item = styled.div`
   padding: 1.5rem;
   border-radius: 8px;
   text-align: left;
+  overflow: hidden;
 `;
 
 const ItemTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
   color: var(--color-primary);
-  text-align: center;
+  text-align: left;
+  justify-content: space-between;
 `;
 
 const Subheading = styled.h3`
@@ -57,12 +59,6 @@ const ItemText = styled.p`
 const CTA = styled.div`
   text-align: center;
   margin-top: 3rem;
-`;
-
-const CTAHeading = styled.h2`
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: var(--color-heading);
 `;
 
 const CTAText = styled.p`
@@ -89,6 +85,47 @@ const CTAButton = styled.button`
   }
 `;
 
+const LeftBox = styled.div`
+  text-align: left;
+  margin-left: 0;
+`;
+
+
+const ItemBody = styled.div<{ isOpen: boolean }>`
+   max-height: ${({ isOpen }) => (isOpen ? '2000px' : '0')};
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  overflow: hidden;
+  transition: 
+    max-height 0.3s ease, 
+    opacity 0.3s ease, 
+    padding 0.3s ease;
+
+  padding: ${({ isOpen }) => (isOpen ? '1rem 1.5rem' : '0 1.5rem')};
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
+`;
+
+/* ---------- AccordionItem Component ---------- */
+function AccordionItem({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <Item>
+      <ItemTitle onClick={() => setIsOpen((o) => !o)}>
+        <h2>{title}<span>{isOpen ? '▲' : '▼'}</span></h2>
+      </ItemTitle>
+      <ItemBody isOpen={isOpen}>{children}</ItemBody>
+    </Item>
+  );
+}
+
 /* ---------- Main Component ---------- */
 function TermsOfService() {
   const navigate = useNavigate();
@@ -107,18 +144,16 @@ function TermsOfService() {
       Site.<br/>
       </Intro>
 
-      <Item>
-        <ItemTitle>1. Eligibility</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "1. Eligibility">
+        <p>
         To use our Site or services, you must be at least 13 years old (or the minimum age of digital
         consent in your jurisdiction). By using the Site, you represent that you meet these requirements
         and that any information you provide is accurate and complete.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>2. Services We Provide</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "2. Services We Provide">
+        <p>
         Players Club Management offers services and content related to Name, Image, and Likeness
         (NIL), including but not limited to:
         <li>NIL representation for student-athletes</li>
@@ -128,47 +163,42 @@ function TermsOfService() {
         <li>Athlete bookings or appearances</li>
         <li>Educational resources</li>
         All services are subject to change, limitation, or discontinuation at our discretion.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>3. Payments & Fees</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "3. Payments & Fees">
+        <p>
         When you make a purchase or engage in a paid service through our Site, you agree to provide
         accurate payment information. All fees are due at the time of service unless otherwise stated in a
         written agreement. <br/>
 
         We reserve the right to modify pricing at any time. Refund policies, if any, are disclosed at
         checkout or in separate written agreements.
+        </p>
+      </AccordionItem>
 
-        </ItemText>
-      </Item>
-
-      <Item>
-        <ItemTitle>4. Intellectual Property</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "4. Intellectual Property">
+        <p>
         All content on this Site — including but not limited to logos, text, graphics, videos, and images
         — is owned by or licensed to Players Club Management and protected by intellectual property
         laws. You may not reproduce, distribute, or exploit any content without our prior written
         permission.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>5. Athlete Representation & Agreements</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "5. Athlete Representation & Agreements">
+        <p>
         If you are a student-athlete or representative seeking NIL services, any formal engagement must
         be governed by a separate NIL Representation Agreement. These Terms do not constitute a
         representation agreement. <br/>
         You are responsible for complying with your school’s or governing body’s NIL compliance
         policies. Players Club Management is not liable for violations of third-party NIL rules or
         institutional regulations
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>6. User Conduct</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "6. User Conduct">
+        <p>
         You agree not to use the Site or our services:
         <li>For any unlawful purpose</li>
         <li>To solicit others to perform or participate in unlawful acts</li>
@@ -178,76 +208,73 @@ function TermsOfService() {
         <li>To submit false or misleading information</li>
         <li>To upload or transmit malicious code or spam</li>
         Violation of these rules may result in termination of your access to the Site.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>7. Third-Party Links and Tools</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "7. Third-Party Links and Tools">
+        <p>
         Our Site may contain links to third-party websites or tools not owned or controlled by Players
         Club Management. We are not responsible for their content, accuracy, or practices. Use them at
         your own risk.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>8. Disclaimers</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "8. Disclaimers">
+        <p>
         We provide our Site and services “as is” and “as available” without warranties of any kind, either
         express or implied. We do not guarantee that the Site will be uninterrupted, secure, or error-free. <br/>
         Players Club Management does not guarantee any specific NIL deal or financial outcome from
         representation or promotion services.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>9. Limitation of Liability</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "9. Limitation of Liability">
+        <p>
         To the maximum extent permitted by law, Players Club Management and its affiliates, partners,
         officers, and employees shall not be liable for any indirect, incidental, or consequential damages
         arising from your use of the Site or our services.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>11. Termination</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "10. Indemnification">
+        <p>
+        You agree to indemnify and hold harmless Players Club Management from any claim, demand,
+        or damages, including attorney’s fees, arising out of your use of the Site or your violation of
+        these Terms.
+        </p>
+      </AccordionItem>
+
+      <AccordionItem title = "11. Termination">
+        <p>
         We reserve the right to suspend or terminate your access to the Site or services for any reason,
         including a breach of these Terms.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>12. Governing Law</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "12. Governing Law">
+        <p>
         These Terms are governed by and interpreted under the laws of the State of California, without
         regard to conflict of law principles. You agree to submit to the exclusive jurisdiction of courts
         located in California for any disputes.
+        </p>
+      </AccordionItem>
 
-        </ItemText>
-      </Item>
-
-      <Item>
-        <ItemTitle>13. Changes to Terms</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "13. Changes to Terms">
+        <p>
         We may update these Terms from time to time to reflect operational or legal changes. It is your
         responsibility to review them periodically. Continued use of the Site constitutes acceptance of
         the revised Terms.
-        </ItemText>
-      </Item>
+        </p>
+      </AccordionItem>
 
-      <Item>
-        <ItemTitle>14. Contact Us</ItemTitle>
-        <ItemText>
+      <AccordionItem title = "14. Contact Us">
+        <p>
         If you have any questions about these Terms, please contact:<br/>
         <strong> Players Club Management </strong><br/>
         Email: playersclubmgmtsjz@gmail.com<br/>
         Address: 17325 Wabash Ave
-        </ItemText>
-      </Item>
-
-    
-
+        </p>
+      </AccordionItem>
 
     </Page>
     <Footer />

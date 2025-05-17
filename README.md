@@ -14,7 +14,7 @@ npm run dev
 
 
 The project follows a common structure for modern frontend applications using Vite and React. Below is an overview of the frontend directory and its contents:
-```js
+```
 Sports-App/
 ├── frontend/                # Main frontend application directory
 │   ├── public/             # Static assets that are publicly available (e.g., icons, manifest)
@@ -35,6 +35,7 @@ Firebase Setup – Step 3 & 4
 Step 3: Create firebase.ts
 This file handles the Firebase configuration and initialization. Using TypeScript improves code reliability, enables better autocompletion, and catches potential errors early.
 Create a file at src/firebase.ts and add the following:
+```js
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
@@ -47,7 +48,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-
+```
 Step 4: (Optional but recommended) Use .env for Firebase config
 Instead of hardcoding your credentials, store them in environment variables using a .env file. This approach keeps sensitive data out of your codebase and supports different configurations for dev/staging/prod.
 Create a .env file at the root of the frontend/ directory with:

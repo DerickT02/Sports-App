@@ -31,6 +31,8 @@ Sports-App/
 │   ├── vite.config.ts     # Configuration for Vite (now using TypeScript)
 │   ├── package.json       # Project dependencies and scripts
 ```
+
+
 Firebase Setup – Step 3 & 4
 Step 3: Create firebase.ts
 This file handles the Firebase configuration and initialization. Using TypeScript improves code reliability, enables better autocompletion, and catches potential errors early.
@@ -49,13 +51,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 ```
+
+
 Step 4: (Optional but recommended) Use .env for Firebase config
 Instead of hardcoding your credentials, store them in environment variables using a .env file. This approach keeps sensitive data out of your codebase and supports different configurations for dev/staging/prod.
 Create a .env file at the root of the frontend/ directory with:
+```
 VITE_FIREBASE_API_KEY=your-api-key
 VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
 VITE_FIREBASE_PROJECT_ID=your-project-id
 VITE_FIREBASE_APP_ID=your-app-id
+
+
+
 
 Then, update firebase.ts to use these environment variables:
 const firebaseConfig = {
@@ -64,10 +72,12 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
+```
 💡 This ensures your API keys are configurable and secure, and supports different values for different environments.
  
 Type-Safe Environment Configuration (vite-env.d.ts)
 To ensure TypeScript knows about your custom environment variables (like the ones used above), create a file called vite-env.d.ts in your project root:
+```
 interface ImportMetaEnv {
   readonly VITE_YOUR_URL: string;
   readonly VITE_REALM: string;
@@ -77,7 +87,7 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
-
+```
 ✅ Why this matters:
 •	Autocompletion: Helps your editor suggest and validate variable names.
 •	Type Safety: Ensures your code doesn’t reference undefined or misnamed variables.

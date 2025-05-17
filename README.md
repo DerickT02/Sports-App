@@ -14,7 +14,7 @@ npm run dev
 
 
 The project follows a common structure for modern frontend applications using Vite and React. Below is an overview of the frontend directory and its contents:
-
+```js
 Sports-App/
 ├── frontend/                # Main frontend application directory
 │   ├── public/             # Static assets that are publicly available (e.g., icons, manifest)
@@ -30,7 +30,7 @@ Sports-App/
 │   ├── index.html         # HTML template used by Vite to serve the app
 │   ├── vite.config.ts     # Configuration for Vite (now using TypeScript)
 │   ├── package.json       # Project dependencies and scripts
-
+```
 Firebase Setup – Step 3 & 4
 Step 3: Create firebase.ts
 This file handles the Firebase configuration and initialization. Using TypeScript improves code reliability, enables better autocompletion, and catches potential errors early.

@@ -6,12 +6,12 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "noEmit": false,  
     "skipLibCheck": true,
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": false,  // Ensure emit is enabled
+    // Ensure emit is enabled
     "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,
